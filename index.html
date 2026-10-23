@@ -1,631 +1,2035 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة اقتصاديات النقود والبنوك التفاعلية</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-primary: #090d16;
-      --bg-secondary: #111827;
-      --bg-card: #1e293b;
-      --bg-card-hover: #263449;
-      --accent-gold: #f59e0b;
-      --accent-gold-glow: rgba(245, 158, 11, 0.2);
-      --accent-cyan: #06b6d4;
-      --accent-purple: #8b5cf6;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --success: #10b981;
-      --success-bg: rgba(16, 185, 129, 0.12);
-      --danger: #ef4444;
-      --danger-bg: rgba(239, 68, 68, 0.12);
-      --border-color: #334155;
-      --radius: 16px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار النقود | مع الشرح المفصل (ص 3 - ص 10)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
-    }
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #131b2e;
+            --bg-card: #19233c;
+            --bg-card-hover: #212e4d;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #10b981;
+            --accent-secondary: #f59e0b;
+            --border-color: rgba(255, 255, 255, 0.09);
+            --glow: rgba(16, 185, 129, 0.2);
+        }
 
-    body {
-      background-color: var(--bg-primary);
-      background-image: 
-        radial-gradient(at 10% 10%, rgba(245, 158, 11, 0.07) 0px, transparent 40%),
-        radial-gradient(at 90% 90%, rgba(6, 182, 212, 0.07) 0px, transparent 40%);
-      color: var(--text-main);
-      min-height: 100vh;
-      line-height: 1.7;
-      padding-bottom: 60px;
-    }
+        [data-theme="light"] {
+            --bg-primary: #f1f5f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #059669;
+            --accent-secondary: #d97706;
+            --border-color: rgba(15, 23, 42, 0.1);
+            --glow: rgba(5, 150, 105, 0.15);
+        }
 
-    header {
-      background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(9, 13, 22, 0.9) 100%);
-      border-bottom: 1px solid var(--border-color);
-      padding: 12px 16px;
-      position: relative; 
-      z-index: 100;
-    }
+        [data-theme="gold"] {
+            --bg-primary: #0f0c06;
+            --bg-secondary: #1c160b;
+            --bg-card: #261e0f;
+            --bg-card-hover: #332814;
+            --text-primary: #fef3c7;
+            --text-secondary: #d4b16a;
+            --accent-primary: #f59e0b;
+            --accent-secondary: #fbbf24;
+            --border-color: rgba(245, 158, 11, 0.22);
+            --glow: rgba(245, 158, 11, 0.25);
+        }
 
-    .container {
-      max-width: 1150px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
+        [data-theme="cyber"] {
+            --bg-primary: #090514;
+            --bg-secondary: #140b29;
+            --bg-card: #1d1138;
+            --bg-card-hover: #27174a;
+            --text-primary: #f3e8ff;
+            --text-secondary: #a855f7;
+            --accent-primary: #06b6d4;
+            --accent-secondary: #ec4899;
+            --border-color: rgba(6, 182, 212, 0.25);
+            --glow: rgba(6, 182, 212, 0.25);
+        }
 
-    .header-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.35s ease, color 0.35s ease;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent-gold), #d97706);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 800;
-      color: #090d16;
-      box-shadow: 0 0 15px var(--accent-gold-glow);
-    }
+        .theme-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .brand-text h1 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      background: linear-gradient(90deg, #fff, var(--accent-gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .theme-secondary {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
 
-    .brand-text p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
+        .text-muted {
+            color: var(--text-secondary);
+        }
 
-    .hud-stats {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+        .accent-btn {
+            background: linear-gradient(135deg, var(--accent-primary), #047857);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
 
-    .stat-pill {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 4px 10px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
+        [data-theme="gold"] .accent-btn {
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+            color: #0f0c06;
+            font-weight: 800;
+        }
 
-    .stat-pill span.val {
-      color: var(--accent-gold);
-      font-size: 0.9rem;
-    }
+        [data-theme="cyber"] .accent-btn {
+            background: linear-gradient(135deg, #06b6d4, #7c3aed);
+            color: #fff;
+        }
 
-    .progress-wrapper {
-      margin-top: 10px;
-      background: var(--bg-card);
-      height: 6px;
-      border-radius: 99px;
-      overflow: hidden;
-    }
+        .accent-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
-      transition: width 0.4s ease;
-    }
+        .accent-btn:active {
+            transform: translateY(0);
+        }
 
-    .nav-tabs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px;
-      margin: 16px 0;
-    }
+        /* Smooth View Transitions */
+        .view-window {
+            display: none;
+            animation: fadeSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-    .tab-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
+        .view-window.active {
+            display: block;
+        }
 
-    .tab-btn:hover {
-      border-color: var(--accent-gold);
-      color: var(--text-main);
-      transform: translateY(-2px);
-    }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(6, 182, 212, 0.12));
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
+        /* Option Button Styling */
+        .option-item {
+            background-color: var(--bg-secondary);
+            border: 1.5px solid var(--border-color);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .controls-bar {
-      background: rgba(17, 24, 39, 0.85); /* تعديل لجعل الخلفية شفافة قليلاً عند التمرير */
-      border: 1px solid var(--border-color);
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      /* تعديلات تثبيت الشريط (Sticky) */
-      position: sticky;
-      top: 10px;
-      z-index: 90;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-    }
+        .option-item:hover:not(.disabled) {
+            background-color: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+            transform: translateX(-4px);
+        }
 
-    .search-box {
-      flex: 1;
-      min-width: 200px;
-      position: relative;
-    }
+        .option-item.selected {
+            border-color: var(--accent-primary);
+            background-color: rgba(16, 185, 129, 0.12);
+        }
 
-    .search-box input {
-      width: 100%;
-      background: var(--bg-primary);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border 0.2s;
-    }
+        .option-item.correct {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.18) !important;
+        }
 
-    .search-box input:focus {
-      border-color: var(--accent-cyan);
-    }
+        .option-item.wrong {
+            border-color: #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.16) !important;
+        }
 
-    .filter-group {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+        /* Smooth Inline Expandable Box for Hint & Detailed Explanation */
+        .inline-collapse {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+        }
 
-    select, .action-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      outline: none;
-      transition: all 0.2s;
-    }
+        .inline-collapse.open {
+            max-height: 800px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
 
-    .action-btn:hover, select:hover {
-      border-color: var(--accent-gold);
-    }
+        /* Page Pill Badge */
+        .page-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            font-size: 0.75rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+        }
 
-    .action-btn.gold {
-      background: var(--accent-gold);
-      color: #090d16;
-      border-color: var(--accent-gold);
-      font-weight: 700;
-    }
+        [data-theme="light"] .page-badge {
+            background: #fef3c7;
+            color: #b45309;
+            border-color: #f59e0b;
+        }
 
-    /* MCQ Grid & Cards */
-    .questions-list { display: flex; flex-direction: column; gap: 16px; }
-    .q-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; position: relative; }
-    .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-    .q-badge { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; }
-    .page-badge { background: rgba(6, 182, 212, 0.12); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); padding: 2px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
-    .q-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-main); }
-    .options-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-    
-    .opt-btn {
-      background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
-      padding: 10px 14px; border-radius: 10px; text-align: right; font-size: 0.9rem; font-weight: 600;
-      cursor: pointer; display: flex; align-items: center; gap: 10px;
-    }
-    .opt-letter { width: 26px; height: 26px; border-radius: 6px; background: rgba(255, 255, 255, 0.06); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-gold); flex-shrink: 0; }
-    .opt-btn.correct { background: var(--success-bg); border-color: var(--success); color: #34d399; }
-    .opt-btn.correct .opt-letter { background: var(--success); color: #090d16; }
-    .opt-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: #f87171; }
-    .opt-btn.wrong .opt-letter { background: var(--danger); color: #fff; }
+        /* Explanation Box Styling */
+        .explanation-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
 
-    .explanation-box { margin-top: 12px; padding: 12px; border-radius: 8px; background: rgba(15, 23, 42, 0.85); border-right: 3px solid var(--accent-gold); display: none; }
-    .explanation-box.show { display: block; }
-    .explanation-box h4 { color: var(--accent-gold); font-size: 0.85rem; margin-bottom: 4px; }
-    .explanation-box p { font-size: 0.85rem; color: #cbd5e1; }
+        [data-theme="light"] .explanation-card {
+            background: #ecfdf5;
+            border-color: #6ee7b7;
+            color: #065f46;
+        }
 
-    /* Essay Section */
-    .section-view { display: none; }
-    .section-view.active { display: block; }
-    .essay-category-title { font-size: 1.1rem; font-weight: 800; color: var(--accent-gold); margin: 20px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
-    .essay-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
-    .essay-card.exam-match { border-right: 4px solid var(--accent-purple); }
-    .essay-header { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.5); }
-    .essay-q-text { font-size: 0.95rem; font-weight: 700; }
-    .exam-tag { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.4); padding: 2px 8px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; display: inline-block;}
-    .essay-body { padding: 0 16px; max-height: 0; overflow: hidden; background: var(--bg-primary); transition: max-height 0.3s ease, padding 0.3s ease; }
-    .essay-card.open .essay-body { padding: 16px; max-height: 1000px; border-top: 1px solid var(--border-color); font-size: 0.9rem;}
-    .key-highlight { color: var(--accent-gold); font-weight: 700; }
-
-    @media (max-width: 768px) {
-      .header-top {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      .brand {
-        flex-direction: column;
-        gap: 4px;
-      }
-      .brand-text h1 { font-size: 1rem; }
-      .brand-text p { display: none; } 
-      
-      .hud-stats {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
+        /* Custom Scrollbar for Question Strip */
+        .no-scrollbar::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+        }
+        .no-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .no-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 999px;
+        }
+    </style>
 </head>
-<body>
+<body class="pb-12">
 
-  <header>
-    <div class="container">
-      <div class="header-top">
-        <div class="brand">
-          <div class="brand-icon">₺</div>
-          <div class="brand-text">
-            <h1>مادة اقتصاديات النقود والبنوك</h1>
-            <p>تحليل شامل للمحاضرة + بنك اختيارات MCQ + أسئلة الامتحانات</p>
-          </div>
-        </div>
-        <div class="hud-stats">
-          <div class="stat-pill">الصح: <span class="val" id="score-correct">0</span></div>
-          <div class="stat-pill">الأسئلة: <span class="val" id="score-attempted">0</span> / <span id="total-mcq">65</span></div>
-          <div class="stat-pill">النسبة: <span class="val" id="score-percent">0%</span></div>
-        </div>
-      </div>
-      <div class="progress-wrapper">
-        <div class="progress-fill" id="progress-bar"></div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <div class="nav-tabs">
-      <button class="tab-btn active" onclick="switchTab('mcq-section', this)">
-        🎯 قسم الاختيارات التفاعلي (65 MCQ)
-      </button>
-      <button class="tab-btn" onclick="switchTab('essay-section', this)">
-        📝 الأسئلة المقالية والامتحانات
-      </button>
-    </div>
-
-    <!-- SECTION 1: MCQ -->
-    <section id="mcq-section" class="section-view active">
-      <div class="controls-bar">
-        <div class="search-box">
-          <input type="text" id="mcq-search" placeholder="🔍 ابحث عن سؤال..." oninput="handleSearch()">
-        </div>
-        <div class="filter-group">
-          <select id="page-filter" onchange="renderMCQs()">
-            <option value="all">الكل (ص3 - ص19)</option>
-            <option value="ص 3">ص 3: المقايضة</option>
-            <option value="ص 4">ص 4: قاعدة الذهب</option>
-            <option value="ص 5">ص 5: قانون جريشم</option>
-            <option value="ص 6">ص 6: مداخل النقود 1</option>
-            <option value="ص 7">ص 7: مداخل النقود 2</option>
-            <option value="ص 8">ص 8: قياس الأثمان</option>
-            <option value="ص 9">ص 9: مخزن القيمة</option>
-            <option value="ص 10">ص 10: المدفوعات الآجلة</option>
-            <option value="ص 11-12">ص 11-12: خصائص النقود</option>
-            <option value="ص 13-14">ص 13-14: الثروة والسيولة</option>
-            <option value="ص 15-16">ص 15-16: أشباه النقود و M1</option>
-            <option value="ص 17-19">ص 17-19: مقاييس M2 و M3</option>
-          </select>
-          <button class="action-btn" onclick="revealAllMCQs()">💡 إظهار الإجابات</button>
-          <button class="action-btn gold" onclick="resetMCQs()">🔄 إعادة الاختبار</button>
-        </div>
-      </div>
-
-      <div class="questions-list" id="mcq-container"></div>
-    </section>
-
-    <!-- SECTION 2: ESSAY & EXAM QUESTIONS -->
-    <section id="essay-section" class="section-view">
-      <div id="essay-container"></div>
-    </section>
-  </main>
-
-  <script>
-    const mcqData = [
-      // --- القديم (ص3 إلى ص10) ---
-      { id: 1, page: "ص 3", q: "يهتم مقرر اقتصاديات النقود والبنوك بدراسة الترابط الوثيق بين ثلاث وحدات متكاملة في آن واحد، وهي:", options: ["النقود، البنوك، والأسواق المالية", "الذهب، الفضة، والمقايضة السلعية", "الضرائب، الإنفاق الحكومي، والتجارة الخارجية", "الأجور، الريع، والفائدة المصرفية"], ans: 0, exp: "نصت مقدمة المقرر (ص 3) على أن المقرر يدرس الترابط الوثيق بين المفاهيم الثلاثة: (النقود، البنوك، والأسواق المالية) كوحدات متكاملة لتهيئة الطالب وظيفياً." },
-      { id: 2, page: "ص 3", q: "تعرف عملية تبادل سلع مقابل سلع أخرى أو خدمات مقابل خدمات أخرى دون دخول أداة وسيطة موحدة بـ:", options: ["النقد بأمر الحكومة", "اقتصاد المبادلة أو المقايضة", "قاعدة الذهب الكاملة", "الائتمان المصرفي الآجل"], ans: 1, exp: "المقايضة (ص 3) هي تبادل سلع بسلع أو خدمات بخدمات أو أي توليفة بينهما دون وجود أداة وسيطة موحدة كالنقود." },
-      { id: 3, page: "ص 3", q: "في اقتصاد المقايضة، كانت قدرة الفرد على اقتناء ما لدى الطرف الآخر تعتمد بشكل أساسي على:", options: ["حجم الودائع الجارية التي يمتلكها في البنك المركزي", "ما لديه من سلع وخدمات يقبل بها الطرف الآخر (توافق الرغبات)", "سعر صرف الذهب مقابل الفضة في الأسواق العالمية", "القرارات القانونية الصادرة عن السلطات النقدية"], ans: 1, exp: "قبل ابتكار النقود، كان حصول الفرد على سلعة مشروطاً بامتلاكه سلعة أو خدمة يرغب فيها الطرف الآخر، وهو ما يعرف بشرط توافق الرغبات (ص 3)." },
-      { id: 4, page: "ص 3", q: "أي مما يلي يُعد من السلبيات المباشرة لاقتصاد المبادلة (المقايضة) المذكورة في المحاضرة؟", options: ["سهولة تجزئة جميع السلع والخدمات دون استثناء", "انعدام تكاليف التخزين تماماً", "احتمال عدم توافق الرغبات وصعوبة تجزئة السلع وتكاليف التخزين", "انخفاض عدد الأسعار النسبية للسلع في الأسواق"], ans: 2, exp: "حددت المحاضرة (ص 3) ست سلبيات للمقايضة: عدم توافق الرغبات، تلف السلع، تكاليف التخزين، الحاجة لمعلومات عن الأثمان، التنقل بين الأسواق، وصعوبة التجزئة." },
-      { id: 5, page: "ص 3", q: "إن حاجة الأفراد في ظل اقتصاد المقايضة إلى التنقل المستمر بين الأسواق ترتب عليها بشكل مباشر:", options: ["زيادة التخصص وتقسيم العمل", "ضياع الوقت والجهد", "ارتفاع القيمة الحقيقية للنقود", "ظهور الحسابات الجارية والشيكات"], ans: 1, exp: "ذكرت المحاضرة (ص 3) أن الحاجة إلى التنقل بين الأسواق للبحث عن طرف متوافق في الرغبات يترتب عليها ضياع الوقت والجهد." },
-      { id: 6, page: "ص 4", q: "تُعرف السلع التي استخدمها الإنسان قديماً كأدوات للتبادل (كالصوف والماشية والذهب) إلى جانب استخداماتها الاستهلاكية الأخرى بـ:", options: ["النقود السلعية", "النقد بأمر الحكومة", "النقود الإلكترونية", "الودائع تحت الطلب"], ans: 0, exp: "النقود السلعية (ص 4) هي سلع لها قيمة تبادلية كوسيط للتبادل إلى جانب قيمتها كسلعة استهلاكية (مثل الماشية والصوف والمحاصيل والذهب والفضة)." },
-      { id: 7, page: "ص 4", q: "ماذا يطلق على النقود الورقية المستخدمة حالياً والتي لا يمكن تحويلها إلى أي شيء آخر وتكون قيمتها النقدية أكبر من قيمتها السوقية كسلعة؟", options: ["النقود السلعية المعدنية", "إيصالات الصاغة الذهبية", "النقد بأمر الحكومة (النقود الإلزامية)", "سبائك قاعدة الذهب"], ans: 2, exp: "النقد بأمر الحكومة (ص 4) هي النقود الورقية الحالية التي لا تتعهد الحكومة بتحويلها إلى ذهب أو غيره، وتكون قيمتها النقدية أكبر من قيمتها كسلعة ورقية." },
-      { id: 8, page: "ص 4", q: "من أين يكتسب «النقد بأمر الحكومة» أهميته وقوته في التداول رغم عدم تعهد الحكومة بتحويله إلى ذهب؟", options: ["من القيمة السوقية للورق والحبر المستخدم في طباعته", "من قبول الناس له وثقتهم فيه كأداة للتبادل", "من وزنه المعدني الثابت", "من إمكانية إذابته واستخدامه في صناعة الزينة"], ans: 1, exp: "أكدت المحاضرة (ص 4) أن النقد بأمر الحكومة لا تتعهد الحكومة بتحويله إلى أي شيء، بل يكتسب أهميته من قبول الناس له." },
-      { id: 9, page: "ص 4", q: "في ظل نظام (قاعدة الذهب)، كيف كان يتحدد سعر صرف العملات المختلفة بعضها مقابل بعض؟", options: ["بناءً على علاقة كل عملة بالذهب باعتباره العامل المشترك بينها", "عن طريق المزادات اليومية للنفط والمحاصيل الزراعية", "بناءً على حجم الحسابات الجارية في البنوك التجارية فقط", "بشكل عشوائي دون أي رابط مشترك"], ans: 0, exp: "في قاعدة الذهب (ص 4) يتم تحديد قيمة كل عملة مقابل كمية محددة من الذهب، وبذلك يصبح الذهب هو العامل المشترك الذي تتحدد على أساسه أسعار الصرف." },
-      { id: 10, page: "ص 4", q: "أي من الآتي لا يُعد من خصائص (قواعد) قاعدة الذهب الثلاث المذكورة في المحاضرة؟", options: ["وجوب تحديد قيمة العملة المحلية بمقدار محدد من الذهب", "ضرورة مواكبة عرض النقود المحلي لكمية الذهب المتوفرة بالبلاد", "استعداد الحكومة لاستبدال العملة المحلية بذهب دون حدود أو قيود", "منع الأفراد نهائياً من تحويل العملة الورقية إلى ذهب تحت أي ظرف"], ans: 3, exp: "منع التحويل يتناقض تماماً مع الخاصية الثالثة لقاعدة الذهب (ص 4) التي تشترط استعداد الحكومة لاستبدال العملة المحلية بما يساويها من ذهب دون حدود أو قيود." },
-      { id: 11, page: "ص 5", q: "عندما كان الذهب يستخدم لأغراض النقد ولأغراض الزينة معاً، فإن زيادة الطلب على الذهب من أجل الزينة كانت تؤدي إلى:", options: ["تناقص كمية الذهب المتوفرة لتوفير الغطاء التام لكمية النقد المصدر", "زيادة الغطاء الذهبي للعملة المصدرة في البنك المركزي تلقائياً", "اختفاء العملات الفضية من التداول فوراً", "انخفاض السعر العالمي لمعدن الذهب"], ans: 0, exp: "أوضحت الملاحظة في (ص 5) أن الكمية المعروضة من الذهب يجب أن تفي بطلبات القطاعين (النقد والزينة)، فزيادة الطلب للزينة يقلل الذهب المتاح كغطاء للنقد المصدر." },
-      { id: 12, page: "ص 5", q: "ينص قانون جريشم (Gresham's Law) في الاقتصاد النقدي على أن:", options: ["النقود الجيدة تطرد النقود السيئة من التداول", "تفضيل الأفراد استخدام النقود السيئة يدفع النقود الجيدة خارج التداول", "عرض النقود يخلق الطلب المساوي له دائماً", "عدد معدلات التبادل يتناسب عكسياً مع عدد السلع"], ans: 1, exp: "ينص قانون جريشم (ص 5) على أن تفضيل الأفراد استخدام النقود السيئة يدفع النقود الجيدة خارج التداول حرصاً من الأفراد على الحفاظ على ثرواتهم." },
-      { id: 13, page: "ص 5", q: "إذا وجدت عملتان معدنيتان بنفس القيمة الإسمية، الأولى محتواها الذهبي 100% من قيمتها الرسمية، والثانية 50% فقط، فوفقاً لقانون جريشم:", options: ["يحتفظ الجمهور بالعملة الأولى (الجيدة) ويستخدم العملة الثانية (السيئة) في التبادل", "يذيب الجمهور العملة الثانية ويترك العملة الأولى في التداول", "تختفي العملة الثانية من الأسواق وتبقى العملة الأولى فقط", "تتساوى القيمة السوقية للمعدن في كلتا العملتين"], ans: 0, exp: "حسب مثال قانون جريشم (ص 5)، يحتفظ الجمهور بالعملة ذات المحتوى الذهبي الكامل (أو يذيبها عند ارتفاع سعر الذهب) ويدفع بالعملة الأقل محتوى في التداول." },
-      { id: 14, page: "ص 5", q: "كيف يظهر تطبيق قانون جريشم في الدول المعاصرة التي تتعرض عملتها المحلية لتناقص قيمتها بسبب التضخم؟", options: ["يتخلص الأفراد من النقد الأجنبي ويحتفظون بالنقد المحلي كمدخرات", "يحتفظ الأفراد بالنقد الأجنبي (نقود جيدة) ويستخدمون النقد المحلي (نقود سيئة) في التبادل للتخلص منه بسرعة", "يتوقف الأفراد عن شراء السلع والخدمات نهائياً", "ترتفع القيمة الحقيقية للعملة المحلية مقابل العملات الأجنبية"], ans: 1, exp: "في أوقات التضخم (ص 5)، تمثل العملة الأجنبية (النقود الجيدة) فيكتنزها الأفراد، بينما تمثل العملة المحلية المتدهورة (النقود السيئة) فيتخلصون منها بسرعة في المبادلات." },
-      { id: 15, page: "ص 6", q: "يرجع استمرار الجدل حول تحديد مفهوم وتعريف واحد للنقود من وقت لآخر ومن دولة لأخرى إلى:", options: ["عدم أهمية النقود في النشاط الاقتصادي الحديث", "الطبيعة الديناميكية لمفهوم النقود واختلاف الاستعمالات وظروف النمو الاقتصادي", "ثبات مكونات النقود منذ عصر المقايضة وحتى اليوم", "اقتصار النقود على المسكوكات الذهبية فقط"], ans: 1, exp: "أشارت المحاضرة (ص 6) إلى أن الجدل يرجع لأهمية النقود في الاقتصاد وطبيعتها الديناميكية المتغيرة حسب الاستعمالات وظروف النمو الاقتصادي." },
-      { id: 16, page: "ص 6", q: "المدخل الذي يعرف النقود بأنها «سندات بحجم ولون معين مع بعض الكلمات والرموز المطبوعة عليها وعملات معدنية من نوع معين» هو:", options: ["المدخل الوظيفي", "المدخل القانوني", "المدخل المادي", "المدخل الفني"], ans: 2, exp: "المدخل المادي (ص 6) يركز على الشكل المادي الظاهري للورقة النقدية والعملة المعدنية." },
-      { id: 17, page: "ص 6", q: "ما هو الانتقاد الأساسي الموجه إلى (المدخل المادي) في تعريف النقود؟", options: ["أنه يحصر النقود في نطاق ضيق للغاية ويتجاهل أشكالها الأخرى كالأحجار والنقود الإلكترونية", "أنه يركز فقط على وظيفة المدفوعات الآجلة", "أنه يشترط موافقة الصاغة على إصدار النقود", "أنه يلغي دور العملات المعدنية من التداول"], ans: 0, exp: "يعاب على المدخل المادي (ص 6) حصره للنقود في نطاق ضيق جداً، لأن النقود اتخذت أشكالاً عديدة منذ الأحجار وحتى النقود الإلكترونية." },
-      { id: 18, page: "ص 6", q: "أي مدخل يعرف النقود بأنها «أداة فنية اكتشفها الإنسان ليتخلص من خلالها من صعوبات المقايضة»؟", options: ["المدخل القانوني", "المدخل الفني", "المدخل المادي", "المدخل الوظيفي"], ans: 1, exp: "هذا هو نص تعريف المدخل الفني للنقود (ص 6)، ويعاب عليه أنه لا يظهر الأساس الذي ترتكز عليه النقود في مباشرة وظائفها." },
-      { id: 19, page: "ص 6", q: "يرتكز (المدخل القانوني) في تعريفه للنقود على خاصية جوهرية هي:", options: ["اللون والحجم المطبوع على الورقة", "القدرة على إبراء الذمة والتمتع بالقبول العام للوفاء بالالتزامات", "كونها مصنوعة من معدن الذهب الخالص بنسبة 100%", "عدم خضوعها لأي تشريعات حكومية"], ans: 1, exp: "يعرف المدخل القانوني النقود (ص 6) بأنها الشيء الذي تتوافر فيه القدرة على إبراء الذمة وتتمتع بالقبول العام على الوفاء بالالتزامات داخل المجتمع." },
-      { id: 20, page: "ص 7", q: "ما هو العيب الموجه إلى (المدخل القانوني) من وجهة نظر الاقتصاديين؟", options: ["أن الاقتصاديين لا يشترطون تمتع النقود بالقدرة القانونية على إبراء الذمة، بل يكفي القبول العام كوسيط للتبادل", "أن القانون يمنع تداول النقود الورقية في الأسواق", "أن المدخل القانوني يعجز عن تفسير سداد الديون الحكومية", "أنه يحصر النقود في البطاقات الذكية فقط"], ans: 0, exp: "أوضحت المحاضرة (ص 7) وجود اختلاف بين المنظور الاقتصادي والقانوني؛ فالاقتصاديون لا يشترطون القدرة القانونية على إبراء الذمة بل القبول العام كوسيط للتبادل." },
-      { id: 21, page: "ص 7", q: "المدخل الذي يعرف النقود بأنها «أي شيء ذو قبول عام في التداول ويستخدم وسيطاً للتداول ومقياساً ومستودعاً للقيمة ووسيلة للمدفوعات الآجلة» هو:", options: ["المدخل المادي", "المدخل الفني", "المدخل الوظيفي", "مدخل المقايضة"], ans: 2, exp: "المدخل الوظيفي (ص 7) يستدل على تعريف النقود من خلال وظائفها الأربع الأساسية في الاقتصاد." },
-      { id: 22, page: "ص 7", q: "تاريخياً، كيف ظهرت النقود الورقية في بدايتها بعد أن أصبح حمل الذهب يمثل عبئاً كبيراً مع زيادة حجم المعاملات؟", options: ["عن طريق إيصالات وشهادات أصدرها الصاغة مقابل الودائع الذهبية للأفراد", "عن طريق طبع العملات البلاستيكية في البنوك الإلكترونية", "بواسطة مقايضة المحاصيل الزراعية بالماشية", "عن طريق إلغاء التجارة الخارجية بين الدول"], ans: 0, exp: "ظهرت النقود الورقية على أيدي الصاغة (ص 7) الذين قبلوا الودائع الذهبية مقابل إيصالات أو شهادات، ثم تم تداول هذه الإيصالات بدلاً من الذهب." },
-      { id: 23, page: "ص 7", q: "ما هي دلالة استخدام عبارة «أي شيء» في صدر تعريف المدخل الوظيفي للنقود؟", options: ["الدلالة على ضعف قيمة النقود في العصر الحديث", "الدلالة على الأهمية والشمولية والعدد غير المحدود من الأشياء التي استخدمت كنقود عبر التاريخ", "الدلالة على أن النقود لا تحتاج إلى قبول عام", "حصر النقود في المعادن النفيسة فقط"], ans: 1, exp: "ذكرت المحاضرة (ص 7) أن كلمة (أي شيء) لها من الأهمية والشمولية الكثير، حيث تدل على العدد غير المحدود من الأشياء التي استخدمت كنقود." },
-      { id: 24, page: "ص 7", q: "ما هو الوضع القانوني للحسابات الجارية في البنوك التجارية المتداولة عبر الشيكات حسب ما ورد في المحاضرة؟", options: ["لها الوضع القانوني الكامل كعملة قانونية إلزامية لا يمكن رفضها", "ليس لها الوضع القانوني كعملة قانونية، ولكن البنوك ملزمة بتحويلها إلى عملة قانونية عند طلب المودعين", "تعتبر نقوداً سلعية ذهبية", "لا تدخل ضمن مفهوم النقود الوظيفي مطلقاً"], ans: 1, exp: "نصت المحاضرة (ص 7 و 8) على أنه بالرغم من الحسابات الجارية بالبنوك التجارية ليس لها الوضع القانوني كعملة قانونية، إلا أن البنوك ملزمة بتحويلها لعملة قانونية عند الطلب." },
-      { id: 25, page: "ص 8", q: "إن الهدف الرئيسي لصانعي السياسة الاقتصادية من تعريف وقياس حجم النقود المتداولة في المجتمع هو:", options: ["إلغاء البنوك التجارية والعودة لنظام الصاغة", "السيطرة والرقابة على حجم النقود لتحقيق استقرار المستوى العام للأسعار وزيادة النشاط الاقتصادي", "زيادة معدلات التضخم السنوية بشكل مستمر", "منع استخدام النقود كوحدة قياس للأثمان"], ans: 1, exp: "أكدت المحاضرة (ص 8) أن الهدف من تعريف وقياس حجم النقود هو تمكين صانعي السياسة الاقتصادية من الرقابة على حجم النقود لتحقيق استقرار الأسعار وزيادة النشاط الاقتصادي." },
-      { id: 26, page: "ص 8", q: "ساهمت وظيفة النقود كـ (أداة للتبادل) في معالجة عيوب المقايضة من خلال:", options: ["توفير الوقت للتخصص في الإنتاج واستقلال عمليات البيع عن عمليات الشراء", "دمج عملية البيع والشراء في لحظة زمنية واحدة إجبارياً", "زيادة عدد القيم التبادلية في السوق إلى أضعاف مضاعفة", "إجبار الأفراد على القيام بأعمال إنتاجية لا يتقنونها"], ans: 0, exp: "أوضحت المحاضرة (ص 8) أن وظيفة التبادل وفرت الوقت للتخصص في الإنتاج وأدت إلى استقلال عمليات البيع عن عمليات الشراء." },
-      { id: 27, page: "ص 8", q: "في اقتصاد المقايضة، إذا كان لدينا 10 سلع في السوق، فكم عدد معدلات التبادل (القيم التبادلية) وفق القانون [ ن(ن-1) ÷ 2 ]؟", options: ["10 قيم تبادلية", "20 قيمة تبادلية", "45 قيمة تبادلية", "90 قيمة تبادلية"], ans: 2, exp: "بتطبيق المعادلة (ص 8 و 9): 10 × (10 - 1) ÷ 2 = (10 × 9) ÷ 2 = 45 قيمة تبادلية." },
-      { id: 28, page: "ص 8", q: "تطبيقاً لمعادلة معدلات التبادل في المحاضرة، إذا زاد عدد السلع في اقتصاد مقايضة إلى 20 سلعة، فكم سيبلغ عدد معدلات التبادل؟", options: ["20 معدل تبادل", "100 معدل تبادل", "190 معدل تبادل", "380 معدل تبادل"], ans: 2, exp: "بتطبيق القانون: [ 20 × (20 - 1) ] ÷ 2 = (20 × 19) ÷ 2 = 190 معدل تبادل، بينما في اقتصاد النقود ستكون 20 سعراً نقدياً فقط." },
-      { id: 29, page: "ص 9", q: "عند الانتقال من اقتصاد المقايضة إلى اقتصاد النقود في سوق يضم 10 سلع، يتقلص عدد الأسعار من 45 قيمة تبادلية إلى:", options: ["سعر واحد فقط لجميع السلع", "5 أسعار نقدية", "10 أسعار نقدية (حيث يوضع سعر نقدي لكل سلعة)", "25 سعراً نقدياً"], ans: 2, exp: "ذكرت المحاضرة (ص 9) أن استخدام النقود يقلص عدد الأسعار لـ 10 سلع من 45 قيمة تبادلية إلى 10 أسعار فقط، وترد قيم جميع السلع لوحدة قياس واحدة." },
-      { id: 30, page: "ص 9", q: "تتوقف فاعلية النقود كـ (مخزن أو مستودع للقيمة) بشكل مباشر على:", options: ["فاعليتها كمقياس للقيمة واحتفاظها بقوتها الشرائية نتيجة الثبات النسبي للعرض والطلب على النقود", "سرعة تلفها المادي وارتفاع تكاليف تخزينها", "انخفاض قيمتها الحقيقية بشكل يومي", "عدم وجود أي فاصل زمني بين البيع والشراء"], ans: 0, exp: "نصت المحاضرة (ص 9) على أن فاعلية النقود كمخزن للقيمة تتوقف على فاعليتها كمقياس للقيمة واحتفاظها بقوتها الشرائية لفترة طويلة عبر استقرار مستوى الأسعار." },
-      { id: 31, page: "ص 9", q: "ماذا يحدث للقيمة الحقيقية (القوة الشرائية) للنقود في فترات الانكماش وفي فترات التضخم على التوالي؟", options: ["ترتفع في فترات الانكماش، وتنخفض في فترات التضخم", "تنخفض في فترات الانكماش، وترتفع في فترات التضخم", "تبقى ثابتة تماماً في كلتا الفترتين", "تنعدم في الانكماش وتتضاعف في التضخم"], ans: 0, exp: "العلاقة عكسية بين المستوى العام للأسعار والقيمة الحقيقية للنقود (ص 9): فترتفع القيمة الحقيقية للنقود في فترات الانكماش (تدهور الأسعار) وتنخفض في فترات التضخم." },
-      { id: 32, page: "ص 9", q: "لماذا يلجأ الأفراد في فترات التضخم واستمرار ارتفاع الأسعار إلى الاحتفاظ بالقيمة في صورة (أصول حقيقية) بدلاً من النقود؟", options: ["لأنها تدر عائداً (ربح، فائدة، ريع) وتحقق أرباحاً رأسمالية مع ارتفاع الأسعار", "لأن الأصول الحقيقية لا يمكن أن تتعرض لأي خسائر رأسمالية عند تسييلها", "لأن القوة الشرائية للنقود ترتفع بشدة أثناء التضخم", "لأن القانون يمنع حيازة النقود الورقية أثناء التضخم"], ans: 0, exp: "أوضحت المحاضرة (ص 9) أن الأصول الحقيقية تدر عائداً (ربح، فائدة، أو ريع) وتحقق أرباحاً رأسمالية عند ارتفاع الأسعار، رغم احتمال تعرضها لخسائر رأسمالية عند الحاجة لتحويلها لنقد." },
-      { id: 33, page: "ص 10", q: "ما هو السبب الاقتصادي الذي أدى إلى ضرورة تسويق المنتجات على أساس العقود وظهور وظيفة النقود كـ (معيار للمدفوعات الآجلة)؟", options: ["زيادة حجم الإنتاج الجاري عن قيمة المبيعات الجارية وتزايد المخزون السلعي في المجتمعات الحديثة", "توقف المصانع عن الإنتاج وانعدام المخزون السلعي", "الرغبة في العودة إلى نظام المقايضة المباشرة", "إلغاء الفوائد المصرفية وعقود الائتمان"], ans: 0, exp: "أشارت المحاضرة (ص 10) إلى أن زيادة الإنتاج الجاري عن المبيعات الجارية وتزايد المخزون السلعي فرض تسويق المنتجات على أساس العقود لتجنب تكديس المخزون." },
-      { id: 34, page: "ص 10", q: "لكي تقوم النقود بوظيفتها كمعيار للمدفوعات الآجلة بكفاءة دون التسبب في اضطراب سوق الائتمان، يجب عليها:", options: ["الاحتفاظ بقيمتها لفترة طويلة نسبياً دون تذبذب ملموس", "تغيير قيمتها الإسمية والحقيقية كل أسبوع", "الاقتصار على قياس القيم الحاضرة فقط دون الآجلة", "تخفيض حجم الائتمان والنشاط الاقتصادي"], ans: 0, exp: "أكدت المحاضرة (ص 10) أنه لكي تقوم النقود بوظيفة وسيط المدفوعات الآجلة وجب عليها الاحتفاظ بقيمتها لفترة طويلة نسبياً لأن التذبذب يربك سوق الائتمان." },
-      { id: 35, page: "ص 10", q: "في فترات ارتفاع الأسعار (التضخم) وتدهور قيمة النقود، ما هو الأثر المترتب على العلاقة بين الدائن (المقرض) والمدين (المقترض)؟", options: ["إعادة توزيع الثروة من الدائن إلى المدين (يتضرر الدائن ويستفيد المدين)", "إعادة توزيع الدخل من المدين إلى الدائن (يتضرر المدين ويستفيد الدائن)", "حصول الدائن على قوة شرائية أكبر مما أقرضه عند عقد القرض", "عدم تأثر أي من الطرفين بالتغير في الأسعار"], ans: 0, exp: "في فترات ارتفاع الأسعار (ص 10) يجد الدائن أن قيمة السلع التي يشتريها القرض عند رده أقل من وقت التعاقد، مما ينطوي على إعادة توزيع الثروة من الدائن إلى المدين." },
-      { id: 36, page: "ص 10", q: "في فترات انخفاض الأسعار (الانكماش)، ماذا يحدث عند سداد القروض الآجلة؟", options: ["تزيد القوة الشرائية للقرض عند رده عما كانت عليه وقت التعاقد، فيعاد توزيع الدخل من المدين إلى الدائن", "تنخفض القوة الشرائية للقرض عند رده، فيستفيد المدين", "يسقط القرض قانونياً ولا يلتزم المدين بالسداد", "تنخفض القيمة الحقيقية للنقود"], ans: 0, exp: "في فترات انخفاض الأسعار (ص 10) يجد المدين أن القرض عند رده يشتري سلعاً أكثر من وقت التعاقد، مما يتضمن إعادة توزيع الدخل من المدين إلى الدائن." },
-
-      // --- الجديد المفصل (ص 11 إلى ص 19) ---
-      { id: 37, page: "ص 11-12", q: "لكي تحافظ النقود على ثقة وإقبال الجماهير عليها، يجب أن تتميز بصفة (الندرة أو محدودية الكمية المعروضة)، وذلك بهدف:", options: ["التوفيق بين الكمية المعروضة والكمية المطلوبة لتجنب ارتفاع الأسعار وانهيار قيمتها", "تشجيع الأفراد على العودة إلى نظام المقايضة", "زيادة تكاليف تخزين السلع", "تسهيل حمل النقود ونقلها"], ans: 0, exp: "أكدت المحاضرة (ص 11) أن زيادة كمية النقد بشكل لا يواكب قدرات الاقتصاد الإنتاجية يساهم في ارتفاع الأسعار وانهيار قيمة النقود، لذا وجب محدودية المعروض منها." },
-      { id: 38, page: "ص 11-12", q: "ما هو الهدف الأساسي من وراء توجيه الحكومات لموارد مالية وتشكيل إدارات أمنية لجعل النقود (صعبة التزوير أو التقليد)؟", options: ["التقليل من القوة الشرائية للنقود", "التضييق على محاولات التزييف لتعزيز مصداقية النقود وثقة الجمهور وقبولهم لها", "إجبار الناس على استخدام المعادن النفيسة فقط", "زيادة السيولة في السوق"], ans: 1, exp: "ذكرت المحاضرة (ص 11) أن الوقاية من التزييف تعزز ثقة الجمهور بالنقود وتجعلهم يدركون أنها سليمة ولن ترفض." },
-      { id: 39, page: "ص 11-12", q: "تتميز النقود بخاصية (سهولة الاحتفاظ بها)، كيف تختلف هذه الخاصية عن الاحتفاظ بالسلع في اقتصاد المقايضة؟", options: ["المقايضة تتطلب مخزوناً ضخماً من السلع، بينما النقود تتطلب احتفاظاً بنقد محدود يؤدي نفس المهام", "النقود تحتاج إلى مساحات تخزين أكبر من السلع", "المقايضة لا تحتاج لأي مكان للاحتفاظ بالسلع", "النقود تتعرض للتلف أسرع من المحاصيل الزراعية"], ans: 0, exp: "ذكرت المحاضرة (ص 12) أن المقايضة تتطلب مخزوناً من السلع، أما النقود فكل ما هو مطلوب الاحتفاظ بنقد محدود يؤدي مهام كمية كبيرة من السلع." },
-      { id: 40, page: "ص 11-12", q: "لماذا تعتبر خاصية (سهولة حملها ونقلها) ضرورية جداً للنقود؟", options: ["لأنها تمنع التضخم", "لأن صعوبة نقلها سيصعب استخدامها على نطاق واسع في التنقل بين الأسواق", "لأنها تزيد من القوة الشرائية للمواطن", "لتقليل الاعتماد على البنوك المركزية"], ans: 1, exp: "أوضحت المحاضرة (ص 12) أنه بدلاً من نقل سلع ثقيلة بين الأسواق، ينتقل المرء بنقود في محفظته، وإن لم تتوفر هذه الخاصية سيصعب استخدامها على نطاق واسع." },
-      { id: 41, page: "ص 11-12", q: "خاصية (قوة التحمل) في النقود تعني:", options: ["أنها تستطيع شراء سلع بأسعار مرتفعة", "أنها مصنوعة من مواد غير قابلة للهلاك والتلف بسرعة", "أنها تتحمل الضرائب الحكومية", "أن البنوك قادرة على تخزينها لفترات قصيرة فقط"], ans: 1, exp: "نصت المحاضرة (ص 12) على أن قوة التحمل تعود إلى عدم قابلية النقود للهلاك بسرعة، وتتعلق بطبيعة المواد التي تصنع منها." },
-      { id: 42, page: "ص 11-12", q: "إن توفر فئات نقدية مختلفة القيم وقابلة للتجزئة إلى وحدات صغيرة متساوية القيمة يسمح بـ:", options: ["توسيع وتسهيل عملية التبادل في المعاملات الصغيرة", "زيادة احتمالية تلف النقود", "تحويل النقود إلى أصول حقيقية", "إلغاء دور الحكومة في إصدار النقود"], ans: 0, exp: "أوضحت المحاضرة (ص 12) أنه كلما أمكن تجزئة النقود لوحدات صغيرة كلما أمكن توسيع عملية التبادل في المعاملات الصغيرة." },
-      { id: 43, page: "ص 11-12", q: "الخاصية التي أغنت الأفراد عن عملية الفحص المتكرر لوزن ونقاوة الأداة الوسيطة (كما كان يحدث مع المعادن كالذهب والفضة) هي:", options: ["سهولة الحمل والنقل", "قوة التحمل", "وحدة أشكالها وسهولة تمييزها والتعرف عليها (التجانس)", "محدودية الكمية المعروضة"], ans: 2, exp: "خاصية (وحدة الأشكال وسهولة التمييز) جعلت الأوراق النقدية متطابقة ضمن الفئة الواحدة، مما أغنى عن فحصها أو الاستعانة بمختص للتأكد من نقاوتها عكس المعادن (ص 12 و 13)." },
-      { id: 44, page: "ص 11-12", q: "لماذا تكتسب النقود ثقة الجمهور لكون (الحكومة هي المصدرة لها)؟", options: ["لأن الحكومة تمنح فوائد على النقود الورقية", "بسبب تضاؤل احتمال عجز الحكومة عن الإيفاء بالتزاماتها مقارنة بأي جهة أخرى", "لأن الحكومة تجبر الناس على شراء الأصول الحقيقية", "لأن الحكومة تستبدل النقود الورقية بالذهب فوراً"], ans: 1, exp: "ذكرت المحاضرة (ص 13) أن ثقة الجمهور بالحكومة تكمن في تضاؤل احتمال عجزها عن الإيفاء بالتزاماتها مقارنة بالجهات الأخرى." },
-      { id: 45, page: "ص 13-14", q: "في التحليل الاقتصادي، تتكون (الثروة الحقيقية للمجتمع) ككل من:", options: ["الأصول النقدية والمالية فقط", "الأصول الحقيقية (السلع المادية الملموسة) فقط", "الأصول الحقيقية والأصول النقدية معاً", "الودائع تحت الطلب فقط"], ans: 1, exp: "أشارت المحاضرة (ص 13) إلى أن ثروة المجتمع تتكون من الأصول الحقيقية فقط، أما الأصول النقدية فهي تمثل ثروة للأفراد، ولا تحسب ضمن ثروة المجتمع لمنع الازدواج المبالغ فيه." },
-      { id: 46, page: "ص 13-14", q: "إذا حدث انخفاض حاد في أسعار الأسهم في البورصة أو تغير في قيمة النقود، فما هو الأثر المباشر لذلك على المجتمع؟", options: ["انخفاض مجموع الثروة القومية الحقيقية للمجتمع فوراً", "انهيار الأصول الحقيقية (كالعقارات والمصانع)", "تغيير في توزيع ثروة المجتمع بين الأفراد دون تخفيض مجموع الثروة الحقيقية مباشرة", "لا يحدث أي أثر مالي إطلاقاً"], ans: 2, exp: "ذكرت المحاضرة (ص 13) أن الأثر المباشر والفوري للتغير في قيمة الحقوق (كالأسهم والنقود) لا يكون على مجموع الثروة القومية وإنما يكون الأثر على توزيع هذه الثروة." },
-      { id: 47, page: "ص 13-14", q: "تُعرّف (السيولة) في الاصطلاح المالي بأنها:", options: ["قدرة الحكومة على طبع المزيد من العملات الورقية", "سرعة تسويق أو تسييل الأصل للحصول على سلع وخدمات فورية دون تحمل خسارة", "شراء العقارات والأراضي في فترات التضخم", "إلغاء الودائع الآجلة من البنوك"], ans: 1, exp: "السيولة (ص 14) ترمز لسرعة تسويق الأصل، ودرجة السيولة هي القدرة على استبدال الأصل بالنقود بأسرع وقت ممكن ودون تحمل خسارة." },
-      { id: 48, page: "ص 13-14", q: "عندما يختار الفرد الاحتفاظ بثروته في شكل (نقود سائلة) بدلاً من الأسهم أو السندات، فإنه يتحمل تضحية اقتصادية تتمثل في:", options: ["التضحية بالسيولة الفورية", "التضحية بتيار من الدخل (فائدة أو ربح) كان سيحصل عليه لو احتفظ بأصول أخرى", "التضحية بالقبول العام للنقود", "تحمل تكاليف تخزين باهظة"], ans: 1, exp: "أوضحت المحاضرة (ص 14) أن النقود بذاتها لا تدر دخلاً، فالاحتفاظ بها ينطوي على تضحية بتيار من الدخل (فائدة أو ربح) مقارنة بحيازة الأسهم أو السندات." },
-      { id: 49, page: "ص 13-14", q: "ما هي طبيعة العلاقة بين (سيولة الأصل) و (العائد الذي يدره)؟", options: ["علاقة طردية", "علاقة عكسية (كلما زادت السيولة قل العائد والعكس صحيح)", "لا توجد علاقة بينهما", "علاقة متساوية دائماً"], ans: 1, exp: "أشارت المحاضرة (ص 14) بوضوح إلى وجود علاقة عكسية بين سيولة الأصل والعائد (النقود سيولتها 100% ولكن لا تدر عائداً، بينما العقارات تدر عائداً ولكن سيولتها منخفضة)." },
-      { id: 50, page: "ص 15-16", q: "وفقاً للتحليل النقدي، ما هي المكونات التي يطلق عليها مصطلح (وسائل الدفع) والتي تؤثر تأثيراً مباشراً على النشاط الاقتصادي؟", options: ["الودائع الآجلة والودائع الادخارية", "صافي العملة المتداولة خارج البنوك + الودائع الجارية الخاصة", "الأسهم والسندات الحكومية", "الودائع الحكومية فقط"], ans: 1, exp: "حددت المحاضرة (ص 15) أن وسائل الدفع تتضمن: صافي العملة المتداولة خارج البنوك (النقد + العملة المساعدة) + الودائع الجارية الخاصة." },
-      { id: 51, page: "ص 15-16", q: "ماذا يطلق على الأصول مثل (الودائع الآجلة في البنوك وغيرها من المدخرات النقدية) والتي يمكن أن تتحول بسهولة إلى نقود؟", options: ["النقود السلعية", "الأصول الحقيقية", "أشباه النقود (Near Money)", "المسكوكات الذهبية"], ans: 2, exp: "ذكرت المحاضرة (ص 15) أن أشباه النقود تتضمن الودائع الآجلة وغيرها من المدخرات، وتسمى كذلك لأن بإمكانها التحول لنقود بسبب درجة سيولتها العالية." },
-      { id: 52, page: "ص 15-16", q: "العوامل المؤثرة على وسائل الدفع تشمل بنوداً في جانب الخصوم، منها:", options: ["رأس المال والاحتياطيات فقط", "الودائع لأجل التوفير لدى البنوك والودائع الحكومية", "الأصول الأجنبية للبنك المركزي", "القروض والسلفيات للقطاع الخاص"], ans: 1, exp: "حسب التقسيم في المحاضرة (ص 15)، الخصوم المؤثرة تتضمن: الودائع لأجل التوفير، الودائع الحكومية، وحسابات المقاصة وغيرها." },
-      { id: 53, page: "ص 15-16", q: "مفهوم المعاملات لقياس العرض النقدي (M1 - التعريف الضيق) يركز بشكل أساسي على أي وظيفة من وظائف النقود؟", options: ["النقود كمستودع للقيمة", "النقود كأداة أو وسيط للتبادل", "النقود كمعيار للمدفوعات الآجلة", "النقود كوحدة لقياس الأثمان"], ans: 1, exp: "يقوم مفهوم المعاملات M1 (ص 16) على أساس استخدام النقود كوسيلة للمدفوعات، ويركز على الأصول التي تستخدم (كوسيط للتبادل)." },
-      { id: 54, page: "ص 15-16", q: "لماذا يتم (استبعاد الودائع لدى البنوك التجارية التي يحتفظ بها البنك المركزي كاحتياطي) عند حساب العرض النقدي M1؟", options: ["لأنها لا تحمل قيمة قانونية", "لأن احتسابها كنقود متداولة سيترتب عليه الازدواج في حساب النقود", "لأن البنوك التجارية ترفض تداولها", "لأنها تعتبر أصولاً أجنبية"], ans: 1, exp: "نصت المحاضرة (ص 16) على أن الودائع لدى البنوك أو النقدية كاحتياطي بالبنك المركزي تستبعد لأن احتسابها سيترتب عليه ازدواج في حساب النقود." },
-      { id: 55, page: "ص 15-16", q: "وفقاً لمفهوم (M1)، لماذا يتم استبعاد (الودائع الحكومية) من حساب العرض النقدي الضيق؟", options: ["لأن الحكومة ترفض استخدامها", "لأنها لا تمثل وسائل دفع مباشرة لشراء السلع والخدمات في المجتمع حالياً", "لأنها أرباح رأسمالية", "لأنها تابعة لصندوق النقد الدولي"], ans: 1, exp: "أوضحت المحاضرة (ص 17) أنه يستبعد من الودائع تحت الطلب (الودائع الحكومية) وذلك لأنها لا تمثل وسائل دفع لشراء السلع والخدمات في المجتمع ضمن المفهوم الضيق." },
-      { id: 56, page: "ص 15-16", q: "ما هي العلاقة المتوقعة بين العرض النقدي (M1) والنشاط الاقتصادي في ظل ثبات ظروف الطلب على السلع؟", options: ["زيادة العرض النقدي تؤدي إلى توقف الإنتاج تماماً", "زيادة العرض النقدي تؤدي إلى زيادة الطلب على عناصر الإنتاج مما يرفع الإنتاج والعمالة", "لا توجد أي علاقة بين M1 والنشاط الاقتصادي", "نقص العرض النقدي يزيد من أرباح المنتجين"], ans: 1, exp: "يرى أنصار M1 (ص 17) أن زيادة العرض النقدي مع ثبات الطلب الاستهلاكي تزيد الطلب على عناصر الإنتاج مما شأنه زيادة الإنتاج والعمالة." },
-      { id: 57, page: "ص 17-19", q: "على ماذا يرتكز (مفهوم السيولة M2) في قياس العرض النقدي ولماذا يشمل الودائع الادخارية والآجلة؟", options: ["يرتكز على وظيفة النقود كـ(مستودع للقيمة) لأن هذه الودائع عالية السيولة ويعتبرها المجتمع معادلة عملياً لعرض النقود", "يرتكز على وظيفة (وحدة قياس الأثمان) فقط", "يرتكز على استبعاد البنوك التجارية من الاقتصاد", "يرتكز على احتساب العقارات والأسهم كنقود سائلة"], ans: 0, exp: "مفهوم السيولة M2 (ص 17) يتحدد بناءً على وظيفة النقود (كمستودع للقيمة)، ويشمل الأصول عالية السيولة (أشباه النقود) لأنها قابلة للتحول بسهولة وتخضع لإدارة السياسة النقدية." },
-      { id: 58, page: "ص 17-19", q: "أحد مبررات أنصار المفهوم (M2) هو أن تعريف النقود يجب أن لا يقتصر على الحسابات الجارية فقط، بل يجب أن يمتد ليشمل:", options: ["الذهب والفضة والماس", "الأصول المالية عالية السيولة لضمان تحقيق السيطرة والرقابة على عرض النقود واستقرار النشاط الاقتصادي", "العقارات التجارية والمصانع", "العملات المعدنية الأجنبية فقط"], ans: 1, exp: "برر أنصار M2 (ص 18) ذلك بأن الدافع من القياس هو الرقابة على العرض النقدي، لذا يجب أن يشمل الأصول المالية عالية السيولة التي تخضع للسياسة النقدية." },
-      { id: 59, page: "ص 17-19", q: "يتكون العرض النقدي (M2) من:", options: ["M1 + الودائع الجارية فقط", "M1 + الودائع الآجلة وبإخطار، الودائع بصناديق التوفير، وشهادات الإيداع ذات الدخل الثابت بالبنوك التجارية", "M1 + الودائع الحكومية فقط", "M1 + بوالص التأمين"], ans: 1, exp: "حدد المقياس M2 (ص 18) بأنه يشمل: M1 + الودائع الآجلة/بإخطار + الودائع بصناديق التوفير + شهادات الإيداع بالبنوك التجارية." },
-      { id: 60, page: "ص 17-19", q: "القصور الرئيسي في المقياس (M2) والذي دفع الاقتصاديين لاستخدام المقياس الأوسع (M3) هو:", options: ["أن M2 يشمل الذهب ولا يشمل الفضة", "أن M2 لا يتضمن الودائع الحكومية ولا الودائع الادخارية في المؤسسات المالية غير البنوك التجارية", "أن M2 يتجاهل النقد الورقي المتداول", "أن M2 يعتبر العقارات من وسائل الدفع"], ans: 1, exp: "أوضحت المحاضرة (ص 18) أن M2 لا يتضمن الودائع في المؤسسات غير البنوك التجارية ولا الودائع الحكومية، مما لا يعكس القياس الفعلي للسيولة، فظهر M3." },
-      { id: 61, page: "ص 17-19", q: "لماذا يصر الاقتصاديون على إدخال (الودائع الحكومية) في المقياس الواسع (M3) رغم استبعادها من M1 و M2؟", options: ["لأن الحكومة تمنع البنوك من استخدامها", "لأن هذه الودائع سوف تنصب آجلاً أو عاجلاً في دائرة الإنفاق العام وتتحول إلى وسائل دفع في يد الأفراد", "لأنها تدفع فوائد أعلى من الودائع الخاصة", "لأنها أصول أجنبية غير قابلة للتحويل"], ans: 1, exp: "أكدت المحاضرة (ص 18-19) أن الودائع الحكومية ستنصب في دائرة الإنفاق العام وتتحول لوسائل دفع، مما يتطلب حسابها في العرض النقدي الواسع." },
-      { id: 62, page: "ص 17-19", q: "يُعرف المقياس (M3) رسمياً في الاقتصاد بمصطلح:", options: ["إجمالي الاحتياطي الأجنبي", "إجمالي السيولة المحلية", "صافي العملة المتداولة", "رأس المال الثابت"], ans: 1, exp: "ذكرت المحاضرة (ص 19) أن M3 يحدد العرض النقدي بصورته الرسمية ويعرف بمصطلح (إجمالي السيولة المحلية)." },
-      { id: 63, page: "ص 17-19", q: "أياً من الأصول التالية (لا ينتمي) إلى المكونات الإضافية في المقياس (M3)؟", options: ["الودائع الحكومية لدى البنوك التجارية", "الودائع الادخارية لدى المؤسسات المالية غير البنوك", "بوالص التأمين لدى شركات التأمين", "المصانع والمعدات الإنتاجية (الأصول الحقيقية)"], ans: 3, exp: "المصانع أصول حقيقية لا تدخل في أي مقياس نقدي. بينما M3 يشمل الودائع الحكومية، ودائع المؤسسات غير البنكية، وبوالص التأمين (ص 19)." },
-      { id: 64, page: "ص 17-19", q: "إذا أراد البنك المركزي مراقبة (أقصى وأوسع مدى للسيولة النقدية والمالية) المتاحة في المجتمع، فأي مقياس سيستخدم؟", options: ["M1 فقط", "M2 فقط", "M3 (إجمالي السيولة المحلية)", "أصول البنوك الأجنبية فقط"], ans: 2, exp: "المقياس M3 (ص 19) هو التعريف الأوسع الذي يتضمن كل مكونات 1 و 2 بالإضافة للأصول المالية الأخرى ذات السيولة العالية نسبياً." },
-      { id: 65, page: "ص 11-12", q: "صعوبة تعرف الأفراد على وحدات نقدية معينة (افتقار النقود لخاصية وحدة الأشكال) تؤدي بالضرورة إلى:", options: ["زيادة الثقة بالنقود", "رفض التعامل بها مما يعيق عملية التبادل وعدم اتساع استخدامها", "ارتفاع قيمتها عالمياً", "سهولة تجزئتها"], ans: 1, exp: "نصت المحاضرة (ص 12) على أن صعوبة التعرف على الوحدات يؤدي إلى رفض التعامل بها مما يعيق عملية التبادل." }
-    ];
-
-    const essayData = [
-      { cat: "exam", tag: "نموذج B - س1 وص 4", q: "س1/ املأ الفراغات: تتميز النقود السلعية بـ .................... و ....................", ans: "<p>تتميز النقود السلعية بأن لها قيمتين:</p><ul><li><span class='key-highlight'>1. قيمة تبادلية (نقدية):</span> تستخدم كأداة للتبادل.</li><li><span class='key-highlight'>2. قيمة استعمالية (سلعية):</span> تستخدم لأغراض استهلاكية (كالزينة أو الغذاء).</li></ul>" },
-      { cat: "exam", tag: "نموذج B - س1 وص 6, 8", q: "س2/ املأ الفراغ: ترجع أهمية تعريف النقود بالمعنى الواسع من أنه يتماشى مع ....................", ans: "<p>يتماشى مع <span class='key-highlight'>الطبيعة الديناميكية المتطورة لمفهوم النقود</span>، وكذلك <span class='key-highlight'>تمكين صانعي السياسة الاقتصادية من السيطرة والرقابة على حجم النقود المتداولة</span> لتحقيق الاستقرار.</p>" },
-      { cat: "exam", tag: "نموذج B - س2 وص 8, 9", q: "س3/ ماذا يقصد بالوظائف التسهيلية للنقود؟ ولماذا هي أفضل مخزن للقيم؟", ans: "<p><span class='key-highlight'>الوظائف التسهيلية:</span> هي الوظائف الأساسية التي تسهل النشاط الاقتصادي (وسيط، مقياس، مخزن، معيار للدفع الآجل).</p><p><span class='key-highlight'>أسباب كونها أفضل مخزن للقيم:</span></p><ul><li>القبول العام والسيولة التامة.</li><li>عدم تعرضها لمخاطر التلف المادي وتناقص القيمة كالسلع.</li><li>إعفاء الفرد من تكاليف التخزين.</li><li>تجنب الخسائر الرأسمالية عند الحاجة للتسييل.</li></ul>" },
-      { cat: "exam", tag: "نموذج B - س4 وص 3, 8", q: "س4/ ما هي الأسباب التي دفعت لظهور وظيفة النقود كوسيط للتبادل؟", ans: "<p>للتخلص من صعوبات اقتصاد المقايضة الستة (ص 3):</p><ul><li>القضاء على احتمال عدم توافق الرغبات.</li><li>تجنب تلف السلع وتكاليف تخزينها.</li><li>توفير الوقت والجهد في الأسواق.</li><li>التغلب على صعوبة تجزئة بعض السلع.</li><li>تحقيق استقلال البيع عن الشراء والتخصص في الإنتاج.</li></ul>" },
-      { cat: "exam", tag: "نموذج A30 - س1 وص 4", q: "س5/ بمَ يتميز نظام قاعدة الذهب؟ وما هي قواعده؟", ans: "<p><span class='key-highlight'>ميزة النظام:</span> قبول الحكومات استبدال عملاتها بذهب وتحديد قيمتها به، ليصبح الذهب عامل الاستقرار.</p><p><span class='key-highlight'>قواعد قاعدة الذهب (ص 4):</span></p><ul><li>1. وجوب تحديد قيمة العملة بمقدار محدد من الذهب.</li><li>2. مواكبة عرض النقود لكمية الذهب المتوفرة كغطاء.</li><li>3. استعداد الحكومة لاستبدال العملة بالذهب دون قيود.</li></ul>" },
-      { cat: "exam", tag: "نموذج A30 - س2 وص 9, 10", q: "س6/ كيف تؤثر التغيرات في الأسعار على القوة الشرائية للنقود؟", ans: "<p>العلاقة <span class='key-highlight'>عكسية</span> بين الأسعار والقوة الشرائية (ص 9 - 10):</p><ul><li><span class='key-highlight'>في التضخم (ارتفاع الأسعار):</span> تنخفض القوة الشرائية للنقود، ويلجأ الأفراد للأصول الحقيقية، ويعاد توزيع الثروة من الدائن للمدين.</li><li><span class='key-highlight'>في الانكماش (انخفاض الأسعار):</span> ترتفع القوة الشرائية للنقود، ويعاد توزيع الدخل من المدين للدائن.</li></ul>" },
-      { cat: "exam", tag: "نموذج B30 - س2 وص 5", q: "س7/ املأ الفراغ: يرجع فشل نظام المعدنين (الذهب والفضة) إلى ....................", ans: "<p>يرجع إلى <span class='key-highlight'>فعل قانون جريشم - أن النقود السيئة تطرد النقود الجيدة من التداول (ص 5)</span>.</p><p>عند اختلاف القيمة السوقية للمعدن عن قيمته الرسمية، يكتنز الناس العملة الجيدة ويدفعون بالسيئة في التداول.</p>" },
-      
-      { cat: "lecture", tag: "سؤال مقالي (ص 6, 7)", q: "س8/ قارن بين المداخل الأربعة لتعريف النقود.", ans: "<ul><li><span class='key-highlight'>1. المدخل المادي:</span> ركز على الشكل والورق والمعدن. عيبه: ضيق النطاق وتجاهل الأنواع الأخرى.</li><li><span class='key-highlight'>2. المدخل الفني:</span> أداة للتخلص من المقايضة. عيبه: لم يوضح أساس عملها.</li><li><span class='key-highlight'>3. المدخل القانوني:</span> القدرة على إبراء الذمة. عيبه: اختلف مع الاقتصاديين الذين اكتفوا بالقبول العام.</li><li><span class='key-highlight'>4. المدخل الوظيفي:</span> أي شيء له قبول عام للتبادل والقياس والمخزون. وهو الأشمل.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي تاريخي (ص 7)", q: "س9/ تتبع المراحل التاريخية لتطور النقود.", ans: "<ul><li>1. استخدام السلع والمعادن (مسكوكات وسبائك ذهبية).</li><li>2. إيصالات الصاغة (كبديل عن حمل الذهب).</li><li>3. التدخل الحكومي لتنظيم النقود الورقية.</li><li>4. الودائع المصرفية والشيكات كشكل حديث للنقود.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي رياضي (ص 8, 9)", q: "س10/ كيف ساهمت النقود بتقليص القيم التبادلية لـ 10 سلع؟", ans: "<p>قانون المقايضة: [ ن × (ن - 1) ] ÷ 2</p><ul><li>في المقايضة: (10 × 9) ÷ 2 = <span class='key-highlight'>45 قيمة تبادلية</span>.</li><li>في النقود: يتقلص العدد إلى <span class='key-highlight'>10 أسعار نقدية فقط</span>.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي (ص 3)", q: "س11/ ما المقصود باقتصاد المبادلة (المقايضة)؟ وما هي أبرز سلبياته التي أدت إلى ابتكار النقود؟", ans: "<p><strong>اقتصاد المبادلة (المقايضة):</strong> هو عملية تبادل سلع مقابل سلع أخرى أو خدمات مقابل خدمات دون تدخل أداة وسيطة موحدة (كالنقود).</p><p><strong>سلبياته (ص 3):</strong></p><ul><li>1. احتمال عدم توافق الرغبات.</li><li>2. احتمال تلف وتناقص قيم السلع بمرور الوقت.</li><li>3. وجود تكاليف نظير تخزين السلع.</li><li>4. الحاجة المستمرة لمعلومات وبيانات عن أثمان السلع.</li><li>5. ضياع الوقت والجهد في التنقل بين الأسواق.</li><li>6. صعوبة تجزئة بعض السلع والخدمات.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي (ص 4)", q: "س12/ قارن بين مفهومي (النقود السلعية) و (النقد بأمر الحكومة).", ans: "<p><span class='key-highlight'>النقود السلعية:</span> هي سلع استخدمها الإنسان للتبادل (كالذهب والفضة والمحاصيل) وتمتلك قيمة تبادلية إلى جانب قيمتها كسلعة استهلاكية.</p><p><span class='key-highlight'>النقد بأمر الحكومة (النقود الورقية):</span> هي نقود لا يمكن تحويلها إلى أي شيء آخر، وتكون قيمتها النقدية <strong>أكبر</strong> من قيمتها السوقية كسلعة، ولا تتعهد الحكومة بتحويلها، بل تكتسب قيمتها من ثقة وقبول الناس لها.</p>" },
-      { cat: "lecture", tag: "سؤال مقالي (ص 8)", q: "س13/ وضح كيف أثرت وظيفة النقود كـ (أداة للتبادل) على التخصص وتقسيم العمل في المجتمع.", ans: "<p>لأن النقود تتميز بالقبول العام، فقد عملت كأداة لإتمام المعاملات وفصلت عملية البيع عن الشراء. هذا الفصل والتسهيل أدى إلى توفير الوقت والجهد المهدور في اقتصاد المقايضة (البحث عن شخص تتوافق رغباته)، مما وفر للأفراد <strong>وقتاً أكبر للتخصص في الإنتاج</strong> والقيام بالأعمال التي يتقنونها بدلاً من القيام بأعمال لا يتقنونها.</p>" },
-      { cat: "lecture", tag: "سؤال مقالي (ص 9)", q: "س14/ فسر: لماذا يلجأ الأفراد للاحتفاظ بـ (الأصول الحقيقية) بدلاً من النقود في فترات التضخم؟ وما هي مخاطر ذلك؟", ans: "<p>يلجأ الأفراد للأصول الحقيقية في فترات التضخم هرباً من تدهور القيمة الحقيقية للنقود.</p><p><strong>المزايا:</strong> الأصول الحقيقية تدر عائداً (ربح، فائدة، أو ريع)، وتحقق <strong>أرباحاً رأسمالية</strong> مع استمرار ارتفاع الأسعار.</p><p><strong>المخاطر (العيوب):</strong> قد يتعرض الفرد لـ <strong>خسائر رأسمالية</strong> عند اضطراره لبيعها وتحويلها إلى أرصدة نقدية بشكل مستعجل.</p>" },
-      { cat: "lecture", tag: "سؤال مقالي (ص 10)", q: "س15/ بين أثر التضخم والانكماش على وظيفة النقود كمعيار للمدفوعات الآجلة وعلى علاقة الدائن بالمدين.", ans: "<ul><li><span class='key-highlight'>في فترات التضخم (ارتفاع الأسعار):</span> تتدهور قيمة النقود، وتصبح قيمة القرض عند رده أقل من القيمة وقت التعاقد. النتيجة: <strong>يتضرر الدائن ويستفيد المدين</strong> (إعادة توزيع الثروة من الدائن للمدين).</li><li><span class='key-highlight'>في فترات الانكماش (انخفاض الأسعار):</span> ترتفع قيمة النقود، وتزيد قيمة القرض عند رده عن وقت التعاقد. النتيجة: <strong>يتضرر المدين ويستفيد الدائن</strong> (إعادة توزيع الدخل من المدين للدائن).</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 11-13)", q: "س16/ عدد الخصائص الثمانية للنقود، مع توضيح أهمية خاصيتي (الندرة) و (وحدة الأشكال).", ans: "<p><strong>الخصائص الثمانية:</strong> 1. محدودية الكمية (الندرة)، 2. صعوبة التزوير، 3. سهولة الاحتفاظ بها، 4. سهولة الحمل والنقل، 5. قوة التحمل، 6. سهولة التجزئة، 7. وحدة الأشكال (التجانس)، 8. الإصدار الحكومي.</p><ul><li><span class='key-highlight'>أهمية الندرة:</span> لتجنب التضخم وانهيار قيمة النقود، يجب أن يواكب عرضها قدرات الاقتصاد الإنتاجية.</li><li><span class='key-highlight'>أهمية وحدة الأشكال:</span> تغني الأفراد عن فحص النقود المستمر وتضمن قبولها العام دون عناء، عكس المعادن التي كانت تتطلب مختصاً لفحص نقاوتها.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 13)", q: "س17/ (النقود لا تُحسب ضمن الثروة القومية الحقيقية للمجتمع). ناقش هذه العبارة مبيناً طبيعة النقود كأصل.", ans: "<p>العبارة صحيحة. الثروة الحقيقية للمجتمع تتكون من <strong>الأصول الحقيقية فقط</strong> (السلع والمصانع والموارد). أما النقود فهي <strong>أصل نقدي ومالي</strong> (حقوق دفترية أو وعود بالدفع). احتسابها ضمن ثروة المجتمع سيؤدي لازدواج مبالغ فيه للثروة. التغير في كمية النقود لا يغير حجم الثروة الحقيقية بل يغير <strong>كيفية توزيعها</strong> بين الأفراد.</p>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 14)", q: "س18/ وضح العلاقة بين (السيولة) و (العائد)، مبيناً التضحية التي يقدمها الفرد عند احتفاظه بالنقود السائلة.", ans: "<p>هناك علاقة <strong>عكسية</strong> بين سيولة الأصل والعائد الذي يدره. النقود تمتلك سيولة 100% (قدرة فورية على الشراء) ولكنها لا تدر أي دخل بذاتها. بالتالي، عندما يقرر الفرد الاحتفاظ بثروته كنقود سائلة، فإنه يقدم <span class='key-highlight'>تضحية بتيار من الدخل (فائدة أو ربح)</span> كان يمكن أن يحصل عليه لو اشترى أصولاً أقل سيولة كالأسهم، السندات، أو العقارات.</p>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 15-16)", q: "س19/ ماذا يتضمن مقياس (M1) لعرض النقود؟ وما هي البنود التي يتعمد هذا المقياس استبعادها ولماذا؟", ans: "<p><strong>يتضمن M1 (وسائل الدفع):</strong> العملة المتداولة خارج البنوك + الودائع الجارية الخاصة (تحت الطلب).</p><p><strong>البنود المستبعدة وأسبابها:</strong></p><ul><li><span class='key-highlight'>1. احتياطيات البنوك لدى البنك المركزي:</span> لمنع الازدواج في الحساب.</li><li><span class='key-highlight'>2. النقدية لدى وزارة المالية:</span> لأنها ليست في التداول المباشر.</li><li><span class='key-highlight'>3. الودائع الحكومية:</span> لأنها لا تمثل قوة شرائية آنية تطالب بسلع وخدمات السوق الخاص فوراً ضمن هذا المفهوم الضيق.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 17-18)", q: "س20/ ما هي مبررات الاقتصاديين لاعتماد (مفهوم السيولة M2) بدلاً من الاكتفاء بـ M1؟", ans: "<p>يستند أنصار M2 على المبررات التالية:</p><ul><li><span class='key-highlight'>1. وجود أشباه نقود:</span> هناك أصول مالية (كالودائع الآجلة والادخارية) تتمتع بدرجة سيولة عالية ويمكن تحويلها لنقود جارية بسهولة لتؤثر في السوق.</li><li><span class='key-highlight'>2. تحقيق الرقابة الفعالة:</span> الدافع من قياس النقود هو سيطرة السلطات النقدية لتحقيق الاستقرار، لذا يجب ألا يقتصر القياس على الحسابات الجارية فقط بل يشمل كل الأصول السائلة الخاضعة لإدارة السياسة النقدية والتي يرتبط حجمها بالنشاط الاقتصادي.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي مفصل (ص 18-19)", q: "س21/ لماذا يُعد المقياس (M3) هو الأوسع والأكثر شمولاً (إجمالي السيولة المحلية)؟ وماذا يضيف على M2؟", ans: "<p>لأنه يعالج قصور M2 الذي تجاهل ودائع مهمة ستتحول لوسائل دفع مستقبلاً. يضيف M3 المكونات التالية إلى M2:</p><ul><li><span class='key-highlight'>1. الودائع الحكومية:</span> لأنها ستنصب عاجلاً أو آجلاً في الإنفاق العام.</li><li><span class='key-highlight'>2. الودائع الادخارية:</span> لدى المؤسسات المالية الأخرى (غير البنوك التجارية).</li><li><span class='key-highlight'>3. بوالص التأمين:</span> لدى شركات التأمين.</li></ul>" },
-      { cat: "lecture", tag: "سؤال مقالي تطبيقي (ص 15-19)", q: "س22/ صنف الأصول التالية حسب انتمائها لمقاييس عرض النقود (M1, M2, M3): [العملات المعدنية، بوالص التأمين، الودائع الجارية الخاصة، الودائع الحكومية، شهادات الإيداع ذات الدخل الثابت].", ans: "<ul><li><strong>العملات المعدنية:</strong> تنتمي لـ M1 (وبالتالي M2 و M3).</li><li><strong>الودائع الجارية الخاصة:</strong> تنتمي لـ M1 (وبالتالي M2 و M3).</li><li><strong>شهادات الإيداع ذات الدخل الثابت:</strong> تُضاف في M2 (ولا تحسب في M1).</li><li><strong>الودائع الحكومية:</strong> تُضاف في M3 (ولا تحسب في M1 و M2).</li><li><strong>بوالص التأمين:</strong> تُضاف في M3 (ولا تحسب في M1 و M2).</li></ul>" }
-    ];
-
-    let userAnswers = {};
-    let searchTimeout; // مؤقت للبحث الذكي
-
-    function switchTab(sectionId, btn) {
-      document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(sectionId).classList.add('active');
-      btn.classList.add('active');
-    }
-
-    // دالة للبحث الذكي وتجنب البطء في الهواتف
-    function handleSearch() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        renderMCQs();
-      }, 300);
-    }
-
-    function renderMCQs() {
-      const search = document.getElementById('mcq-search').value.trim().toLowerCase();
-      const pageFilter = document.getElementById('page-filter').value;
-      const container = document.getElementById('mcq-container');
-      const letters = ['أ', 'ب', 'ج', 'د'];
-
-      const filtered = mcqData.filter(item => {
-        const matchPage = pageFilter === 'all' || item.page === pageFilter;
-        const matchSearch = item.q.toLowerCase().includes(search) || item.exp.toLowerCase().includes(search) || item.options.some(o => o.toLowerCase().includes(search));
-        return matchPage && matchSearch;
-      });
-
-      // رسالة توضيحية عند عدم وجود نتائج للبحث
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.1rem;">لا توجد أسئلة تطابق بحثك 🔍</div>`;
-        return;
-      }
-
-      container.innerHTML = filtered.map(item => {
-        const answered = userAnswers.hasOwnProperty(item.id);
-        const userChoice = userAnswers[item.id];
-
-        const optionsHTML = item.options.map((opt, idx) => {
-          let cls = 'opt-btn';
-          if (answered) {
-            if (idx === item.ans) cls += ' correct'; // الإجابة الصحيحة تلون بالأخضر دائماً
-            else if (idx === userChoice && userChoice !== item.ans && userChoice !== -1) cls += ' wrong'; // إجابة المستخدم الخاطئة
-          }
-          return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="selectOption(${item.id}, ${idx})"><span class="opt-letter">${letters[idx]}</span><span>${opt}</span></button>`;
-        }).join('');
-
-        return `
-          <div class="q-card" id="q-card-${item.id}">
-            <div class="q-header">
-              <span class="q-badge">سؤال #${item.id}</span>
-              <span class="page-badge">📍 ${item.page}</span>
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-30 backdrop-blur-md bg-opacity-85 theme-secondary border-b px-2 sm:px-4 py-1.5 sm:py-2">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
+            <!-- Brand Title -->
+            <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="switchWindow('view-start')">
+                <div class="w-8 h-8 rounded-lg accent-btn flex items-center justify-center text-sm shadow-md">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <div class="leading-none">
+                    <h1 class="font-extrabold text-sm sm:text-base flex items-center gap-1.5">
+                        <span>بورصة النقود</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">58 سؤال + الشرح</span>
+                    </h1>
+                    <p class="text-[10px] text-muted mt-0.5 hidden sm:block">من عصر المقايضة لحد البنك المركزي 💸</p>
+                </div>
             </div>
-            <div class="q-title">${item.q}</div>
-            <div class="options-grid">${optionsHTML}</div>
-            <div class="explanation-box ${answered ? 'show' : ''}" id="exp-${item.id}">
-              <h4>💡 التفسير المرجعي:</h4><p>${item.exp}</p>
+
+            <!-- Controls: Sound + Themes -->
+            <div class="flex items-center gap-1.5 shrink-0">
+                <!-- Sound Mute/Unmute -->
+                <button id="sound-btn" onclick="toggleSound()" title="تفعيل/كتم المؤثرات الصوتية" class="w-7 h-7 rounded-lg theme-card flex items-center justify-center text-xs hover:scale-105">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-emerald-400"></i>
+                </button>
+
+                <!-- Theme Switcher Pills -->
+                <div class="flex items-center p-0.5 rounded-lg theme-card gap-0.5">
+                    <button onclick="setTheme('dark')" id="theme-dark" class="px-1.5 py-0.5 rounded text-[10px] font-bold transition-all bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" title="الوضع الليلي">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button onclick="setTheme('light')" id="theme-light" class="px-1.5 py-0.5 rounded text-[10px] font-bold transition-all text-muted hover:text-current" title="الوضع النهاري">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                    <button onclick="setTheme('gold')" id="theme-gold" class="px-1.5 py-0.5 rounded text-[10px] font-bold transition-all text-muted hover:text-current" title="ثيم قاعدة الذهب">
+                        <i class="fa-solid fa-coins"></i>
+                    </button>
+                    <button onclick="setTheme('cyber')" id="theme-cyber" class="px-1.5 py-0.5 rounded text-[10px] font-bold transition-all text-muted hover:text-current" title="ثيم نيون الشورجة">
+                        <i class="fa-solid fa-bolt"></i>
+                    </button>
+                </div>
             </div>
-          </div>
-        `;
-      }).join('');
-    }
+        </div>
+    </header>
 
-    function selectOption(qId, optIdx) {
-      if (userAnswers.hasOwnProperty(qId)) return;
-      userAnswers[qId] = optIdx;
-      // حفظ الإجابات لكي لا تضيع عند تحديث الصفحة
-      localStorage.setItem('mcqAnswers', JSON.stringify(userAnswers));
-      updateStats();
-      renderMCQs();
-    }
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 pt-6">
 
-    function updateStats() {
-      let attempted = 0;
-      let correct = 0;
-      for (const [id, choice] of Object.entries(userAnswers)) {
-        if (choice !== -1) attempted++; // لا تحتسب الأسئلة التي تم كشفها (قيمتها -1)
-        const qObj = mcqData.find(x => x.id === parseInt(id));
-        if (qObj && qObj.ans === choice) correct++;
-      }
-      
-      // احتساب تقدم شريط الإنجاز بناءً على جميع الأسئلة المحلولة أو المكشوفة
-      const totalProgress = Object.keys(userAnswers).length; 
+        <!-- ==========================================
+             WINDOW 1: START & SETUP VIEW (نافذة البدء)
+             ========================================== -->
+        <section id="view-start" class="view-window active">
+            <!-- Hero Banner -->
+            <div class="theme-card rounded-3xl p-6 sm:p-8 mb-6 relative overflow-hidden">
+                <div class="absolute -left-10 -bottom-10 opacity-5 text-9xl pointer-events-none">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
 
-      document.getElementById('score-correct').textContent = correct;
-      document.getElementById('score-attempted').textContent = attempted;
-      document.getElementById('score-percent').textContent = (attempted > 0 ? Math.round((correct / attempted) * 100) : 0) + '%';
-      document.getElementById('progress-bar').style.width = ((totalProgress / mcqData.length) * 100) + '%';
-    }
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                        <i class="fa-solid fa-book-open ml-1"></i> الملزمة كاملة: ص 3 إلى ص 10
+                    </span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        <i class="fa-solid fa-graduation-cap ml-1"></i> مزود بشرح كامل لكل إجابة صحيحة
+                    </span>
+                </div>
 
-    function revealAllMCQs() {
-      mcqData.forEach(item => { 
-        if (!userAnswers.hasOwnProperty(item.id)) {
-          userAnswers[item.id] = -1; // -1 تعني أن السؤال تم كشفه ولم يقم الطالب بحله بنفسه
+                <h2 class="text-2xl sm:text-3xl font-black mb-3 leading-snug">
+                    يا هلا بيك باختبار <span class="text-amber-400">"التطور التاريخي للنقود"</span> 🏦
+                </h2>
+                <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
+                    جمعنالك كل حرف وكل تفصيلة بالملزمة (من صفحة 3 لحد صفحة 10) بـ <strong>58 سؤال MCQ</strong> مع <strong>تلميحات ذكية</strong> و<strong>شرح مفصل للإجابة الصحيحة</strong> لكل سؤال حتى تفهم المادة 100% وما تدرخها درخ!
+                    إذا قاري زين راح تتعين محافظ للبنك المركزي، وإذا مقاري راح يشمروك بعصر المقايضة تنطي دجاجة وتاخذ كونية تمن. اضبط إعداداتك جوة وتوكل على الله!
+                </p>
+
+                <!-- Quick Stats Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                    <div class="theme-secondary rounded-2xl p-3.5 text-center">
+                        <div class="text-amber-400 text-xl mb-1"><i class="fa-solid fa-list-check"></i></div>
+                        <div class="text-lg font-black">58 سؤال</div>
+                        <div class="text-xs text-muted">شامل لكل فقرة</div>
+                    </div>
+                    <div class="theme-secondary rounded-2xl p-3.5 text-center">
+                        <div class="text-emerald-400 text-xl mb-1"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <div class="text-lg font-black">58 شرح وافي</div>
+                        <div class="text-xs text-muted">تفسير سبب الإجابة</div>
+                    </div>
+                    <div class="theme-secondary rounded-2xl p-3.5 text-center">
+                        <div class="text-sky-400 text-xl mb-1"><i class="fa-solid fa-file-lines"></i></div>
+                        <div class="text-lg font-black">ص 3 - ص 10</div>
+                        <div class="text-xs text-muted">مرقم حسب الملزمة</div>
+                    </div>
+                    <div class="theme-secondary rounded-2xl p-3.5 text-center">
+                        <div class="text-purple-400 text-xl mb-1"><i class="fa-solid fa-crown"></i></div>
+                        <div class="text-lg font-black">5 ألقاب</div>
+                        <div class="text-xs text-muted">حسب درجتك النهائية</div>
+                    </div>
+                </div>
+
+                <!-- Quiz Configuration Options -->
+                <div class="border-t border-white/10 pt-6">
+                    <h3 class="text-lg font-extrabold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-400"></i>
+                        <span>تضبيط الكعدة والاختبار (خياراتك):</span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <!-- Option 1: Shuffle Questions -->
+                        <label class="theme-secondary rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:border-emerald-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-shuffle"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm sm:text-base">خربطة ترتيب الأسئلة</div>
+                                    <div class="text-xs text-muted">حتى لا تحفظهن عالتسلسل مثل الببغاء!</div>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="opt-shuffle-q" class="w-5 h-5 accent-emerald-500 rounded cursor-pointer">
+                        </label>
+
+                        <!-- Option 2: Shuffle Answers -->
+                        <label class="theme-secondary rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:border-emerald-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-random"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm sm:text-base">تغيير مكان الاختيارات (أ، ب، ج، د)</div>
+                                    <div class="text-xs text-muted">نفرّ الاختيارات لأن أغلبها جانت (ب) بالملف!</div>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="opt-shuffle-a" checked class="w-5 h-5 accent-emerald-500 rounded cursor-pointer">
+                        </label>
+
+                        <!-- Option 3: Instant Correction & Explanation -->
+                        <label class="theme-secondary rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:border-emerald-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-bolt-lightning"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm sm:text-base">تصحيح فوري + إظهار شرح الجواب</div>
+                                    <div class="text-xs text-muted">يطلعلك الشرح والتحشيش أول ما تختار الجواب</div>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="opt-instant" checked class="w-5 h-5 accent-emerald-500 rounded cursor-pointer">
+                        </label>
+
+                        <!-- Option 4: Filter by Page or Count -->
+                        <div class="theme-secondary rounded-2xl p-4 flex flex-col justify-center">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="font-bold text-sm flex items-center gap-1.5">
+                                    <i class="fa-solid fa-filter text-purple-400"></i>
+                                    حدد نطاق الأسئلة أو الصفحات:
+                                </span>
+                            </div>
+                            <select id="opt-scope" class="w-full rounded-xl px-3 py-2 text-sm font-bold bg-black/25 border border-white/10 focus:outline-none focus:border-emerald-500">
+                                <option value="all">الكل (58 سؤال - من ص 3 إلى ص 10)</option>
+                                <option value="quick15">اختبار سريع عالطاير (15 سؤال عشوائي)</option>
+                                <option value="quick30">نص ونص (30 سؤال عشوائي)</option>
+                                <option value="p3-4">الجزء الأول: المقايضة وقاعدة الذهب (ص 3 - ص 4)</option>
+                                <option value="p5-7">الجزء الثاني: قانون جريشم ومداخل النقود (ص 5 - ص 7)</option>
+                                <option value="p8-10">الجزء الثالث: وظائف النقود الأربعة (ص 8 - ص 10)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Start Action Button -->
+                    <button onclick="startQuiz()" class="w-full py-4 rounded-2xl accent-btn text-lg font-black flex items-center justify-center gap-3 shadow-lg">
+                        <span>يلا نبلش الاختبار (شد حيلك يالذهب!)</span>
+                        <i class="fa-solid fa-rocket"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             WINDOW 2: QUIZ VIEW (نافذة الأسئلة)
+             ========================================== -->
+        <section id="view-quiz" class="view-window">
+            <!-- Top Quiz Status Bar -->
+            <div class="theme-card rounded-2xl p-4 mb-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <!-- Question Counter -->
+                    <div class="flex items-center gap-2">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-sm" id="q-counter-badge">
+                            سؤال 1 من 58
+                        </span>
+                        <!-- Page Number Badge right next to question counter -->
+                        <span id="q-page-badge" class="page-badge" title="رقم الصفحة في الملزمة">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span id="q-page-text">ملزمة ص 3</span>
+                        </span>
+                    </div>
+
+                    <!-- Live Stats: Score & Timer -->
+                    <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
+                        <span class="px-2.5 py-1 rounded-lg theme-secondary flex items-center gap-1.5 text-emerald-400" title="الإجابات الصحيحة">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span id="live-correct">0</span>
+                        </span>
+                        <span class="px-2.5 py-1 rounded-lg theme-secondary flex items-center gap-1.5 text-rose-400" title="الإجابات الخاطئة">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span id="live-wrong">0</span>
+                        </span>
+                        <span class="px-2.5 py-1 rounded-lg theme-secondary flex items-center gap-1.5 text-amber-400" title="الوقت المنقضي">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="live-timer">00:00</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Smooth Progress Bar -->
+                <div class="w-full h-2.5 bg-black/30 rounded-full overflow-hidden mb-3">
+                    <div id="quiz-progress-bar" class="h-full bg-gradient-to-l from-emerald-400 to-teal-500 transition-all duration-300" style="width: 2%"></div>
+                </div>
+
+                <!-- Horizontal Mini Question Navigator Strip -->
+                <div id="q-nav-strip" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+                    <!-- Dynamically populated pills -->
+                </div>
+            </div>
+
+            <!-- Active Question Card -->
+            <div class="theme-card rounded-3xl p-5 sm:p-7 mb-4">
+                <!-- Question Header Row with Page Pill & Action Triggers -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-muted" id="q-category-label">
+                            التطور التاريخي للنقود
+                        </span>
+                        <span id="q-inline-page" class="page-badge">
+                            <i class="fa-solid fa-bookmark"></i> ص 3
+                        </span>
+                    </div>
+
+                    <!-- Inline Action Buttons: Hint & Reveal Explanation (No annoying modal!) -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleHint()" id="hint-btn" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 transition-all flex items-center gap-1.5 shrink-0">
+                            <i class="fa-regular fa-lightbulb"></i>
+                            <span>تلميح عالسريع</span>
+                        </button>
+                        <button onclick="revealExplanationDirectly()" id="reveal-btn" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 transition-all flex items-center gap-1.5 shrink-0" title="اعرف الجواب الصحيح وشرحه فوراً">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>إظهار الجواب والشرح</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <h2 id="q-text" class="text-lg sm:text-xl font-extrabold leading-relaxed mb-4">
+                    نص السؤال يظهر هنا...
+                </h2>
+
+                <!-- Inline Hint Container (Smoothly expands in place before answering) -->
+                <div id="hint-box" class="inline-collapse rounded-2xl bg-amber-500/10 border border-amber-500/30 px-4 py-3 text-xs sm:text-sm text-amber-300">
+                    <div class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400 mt-1 text-base"></i>
+                        <div>
+                            <span class="font-extrabold block text-amber-400 mb-0.5">تغشيشة عراقية علمود تتذكر قبل لا تجاوب:</span>
+                            <p id="hint-text" class="leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options List -->
+                <div id="options-container" class="space-y-3 mt-5">
+                    <!-- Populated via JS -->
+                </div>
+
+                <!-- Inline Instant Feedback & Detailed Explanation Card (Non-blocking, Rich & Smooth) -->
+                <div id="feedback-box" class="inline-collapse rounded-2xl overflow-hidden">
+                    <!-- Reaction Banner -->
+                    <div id="feedback-header" class="px-4 py-3 flex flex-wrap items-center justify-between gap-2 border-b border-white/10">
+                        <div class="flex items-center gap-2.5 font-extrabold text-sm sm:text-base">
+                            <i id="feedback-icon" class="fa-solid fa-face-grin-stars text-xl"></i>
+                            <span id="feedback-text">عاشت ايدك!</span>
+                        </div>
+                        <span id="feedback-page-ref" class="page-badge">ملزمة ص 3</span>
+                    </div>
+
+                    <!-- Correct Answer & Rich Explanation Body -->
+                    <div class="p-4 space-y-3 text-xs sm:text-sm leading-relaxed">
+                        <!-- Highlighted Correct Answer -->
+                        <div class="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/35 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-emerald-400 text-base mt-0.5 shrink-0"></i>
+                            <div>
+                                <span class="font-black text-emerald-400 block mb-0.5">الإجابة الصحيحة المعتمدة:</span>
+                                <span id="feedback-correct-answer" class="font-bold"></span>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Explanation of WHY it is correct -->
+                        <div class="p-3.5 rounded-xl theme-secondary border border-white/10 flex items-start gap-2.5">
+                            <i class="fa-solid fa-book-open-reader text-amber-400 text-base mt-1 shrink-0"></i>
+                            <div>
+                                <span id="explanation-title" class="font-black text-amber-400 block mb-1">
+                                    💡 ليش هذا الجواب هو الصح؟ (شرح الملزمة):
+                                </span>
+                                <p id="feedback-explanation-text" class="leading-relaxed opacity-95"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Footer Controls -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <button onclick="prevQuestion()" id="btn-prev" class="px-4 py-3 rounded-2xl theme-card font-bold text-sm hover:border-emerald-500/40 flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <span>السابق</span>
+                    </button>
+                    <button onclick="nextQuestion()" id="btn-next" class="px-5 py-3 rounded-2xl accent-btn font-bold text-sm flex items-center gap-2">
+                        <span id="btn-next-label">التالي</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+
+                <button onclick="finishQuiz()" class="px-4 py-3 rounded-2xl bg-rose-500/15 text-rose-400 border border-rose-500/30 hover:bg-rose-500/25 font-bold text-sm flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-flag-checkered"></i>
+                    <span>إنهاء وتسليم الدفتر</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             WINDOW 3: RESULTS & FUNNY RANK VIEW (نافذة النتيجة واللقب)
+             ========================================== -->
+        <section id="view-results" class="view-window">
+            <div class="theme-card rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden mb-6">
+                <!-- Score Circle & Rank Badge -->
+                <div class="max-w-lg mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold bg-amber-500/20 text-amber-400 border border-amber-500/30 mb-4">
+                        <i class="fa-solid fa-award"></i>
+                        <span>اللقب الاقتصادي الرسمي مالتك</span>
+                    </div>
+
+                    <div id="rank-emoji" class="text-5xl sm:text-6xl mb-3">🏦👑</div>
+                    <h2 id="rank-title" class="text-2xl sm:text-3xl font-black mb-2 text-amber-400">
+                        محافظ البنك المركزي العراقي
+                    </h2>
+                    <p id="rank-desc" class="text-muted text-sm sm:text-base leading-relaxed mb-6">
+                        ختمت علم الاقتصاد! جريشم بنفسه يفرشلك ورد بالشورجة!
+                    </p>
+
+                    <!-- Score Progress Ring / Display -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                        <div class="theme-secondary rounded-2xl p-4">
+                            <div class="text-xs text-muted mb-1">النسبة المئوية</div>
+                            <div id="res-percent" class="text-2xl font-black text-emerald-400">100%</div>
+                        </div>
+                        <div class="theme-secondary rounded-2xl p-4">
+                            <div class="text-xs text-muted mb-1">الإجابات الصحيحة</div>
+                            <div id="res-correct" class="text-2xl font-black text-emerald-400">58 / 58</div>
+                        </div>
+                        <div class="theme-secondary rounded-2xl p-4">
+                            <div class="text-xs text-muted mb-1">الأخطاء / المتروك</div>
+                            <div id="res-wrong" class="text-2xl font-black text-rose-400">0</div>
+                        </div>
+                        <div class="theme-secondary rounded-2xl p-4">
+                            <div class="text-xs text-muted mb-1">الوقت المستغرق</div>
+                            <div id="res-time" class="text-2xl font-black text-amber-400">02:45</div>
+                        </div>
+                    </div>
+
+                    <!-- Page-by-Page Mastery Breakdown -->
+                    <div class="theme-secondary rounded-2xl p-4 text-right mb-6">
+                        <h4 class="text-xs font-extrabold text-muted uppercase mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-pie text-amber-400"></i>
+                            <span>تحليل مستواك حسب صفحات الملزمة (ص 3 إلى ص 10):</span>
+                        </h4>
+                        <div id="page-breakdown-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons to Window 4 (Review) or Window 1 (Restart) -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                        <button onclick="openReviewWindow('all')" class="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-2xl accent-btn font-extrabold text-sm sm:text-base flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+                            <span>مراجعة الأجوبة مع الشرح الكامل (ص 3 - ص 10)</span>
+                        </button>
+                        <button onclick="switchWindow('view-start')" class="w-full sm:w-auto py-3.5 px-6 rounded-2xl theme-secondary hover:border-emerald-500/40 font-extrabold text-sm sm:text-base flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>إعادة الاختبار بغير إعدادات</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             WINDOW 4: DETAILED REVIEW VIEW (نافذة مراجعة الأجوبة والشرح)
+             ========================================== -->
+        <section id="view-review" class="view-window">
+            <!-- Header & Filter Controls -->
+            <div class="theme-card rounded-2xl p-3 sm:p-4 mb-4 sticky top-[42px] sm:top-[50px] z-20 backdrop-blur-md bg-opacity-95 shadow-sm border-b sm:border-x-0 border-x-0">
+                <div class="flex flex-col gap-2 mb-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="leading-tight">
+                            <h2 class="text-sm sm:text-base font-black flex items-center gap-1.5">
+                                <i class="fa-solid fa-clipboard-check text-emerald-400"></i>
+                                <span>مراجعة الدفتر وشرح الإجابات</span>
+                            </h2>
+                            <p class="text-[10px] text-muted mt-0.5">مع شرح الملزمة (ص 3 - ص 10)</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button onclick="toggleAllReviewExplanations()" id="btn-toggle-rev-exp" class="px-2 py-1 rounded-lg bg-amber-500/15 text-amber-400 border border-amber-500/30 text-[10px] font-bold flex items-center gap-1 hover:bg-amber-500/25">
+                                <i class="fa-solid fa-book-open"></i>
+                                <span id="toggle-rev-exp-text">إخفاء الشرح</span>
+                            </button>
+                            <button onclick="switchWindow('view-results')" class="px-2 py-1 rounded-lg theme-secondary text-[10px] font-bold hover:border-emerald-500/40 flex items-center gap-1">
+                                <i class="fa-solid fa-trophy text-amber-400"></i>
+                                <span>النتيجة</span>
+                            </button>
+                            <button onclick="switchWindow('view-start')" class="px-2 py-1 rounded-lg accent-btn text-[10px] font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-house"></i>
+                                <span>البداية</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Pills -->
+                <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-2 border-t border-white/5">
+                    <div class="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1 w-full sm:w-auto flex-nowrap">
+                        <button onclick="filterReview('all')" id="rev-filter-all" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0">
+                            الكل (<span id="count-all">0</span>)
+                        </button>
+                        <button onclick="filterReview('correct')" id="rev-filter-correct" class="px-2 py-1 rounded-lg text-[10px] font-bold theme-secondary text-muted shrink-0">
+                            صحيحة ✅ (<span id="count-correct">0</span>)
+                        </button>
+                        <button onclick="filterReview('wrong')" id="rev-filter-wrong" class="px-2 py-1 rounded-lg text-[10px] font-bold theme-secondary text-muted shrink-0">
+                            خاطئة ❌ (<span id="count-wrong">0</span>)
+                        </button>
+                    </div>
+
+                    <!-- Page Filter Dropdown -->
+                    <select id="rev-page-select" onchange="filterReviewByPage(this.value)" class="w-full sm:w-auto rounded-lg px-2 py-1 text-[10px] font-bold theme-secondary focus:outline-none shrink-0">
+                        <option value="all">كل الصفحات (ص 3 - ص 10)</option>
+                        <option value="3">ص 3 (المقايضة)</option>
+                        <option value="4">ص 4 (النقود السلعية والذهب)</option>
+                        <option value="5">ص 5 (قانون جريشم)</option>
+                        <option value="6">ص 6 (المداخل)</option>
+                        <option value="7">ص 7 (المدخل الوظيفي)</option>
+                        <option value="8">ص 8 (التبادل)</option>
+                        <option value="9">ص 9 (وحدة القياس والمخزن)</option>
+                        <option value="10">ص 10 (المدفوعات الآجلة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Review Cards List -->
+            <div id="review-list-container" class="space-y-4">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         JAVASCRIPT ENGINE & COMPLETE 58 QUESTIONS WITH EXPLANATIONS
+         ========================================== -->
+    <script>
+        /**
+         * Complete 58 Questions Dataset from the Lecture PDF (Mapped accurately to Handout Pages ص 3 to ص 10)
+         * Every question includes:
+         * - `hint`: Quick pre-answer clue in Iraqi dialect.
+         * - `explanation`: Detailed post-answer explanation of WHY the correct option is right according to the lecture.
+         */
+        const MASTER_QUESTIONS = [
+            // --- ص 3 (PDF Page 1) ---
+            {
+                id: 1, page: 3, category: "اقتصاد المقايضة",
+                q: "قبل ابتكار النقود، ماذا كان يطلق على النظام الاقتصادي الذي يعتمد على مبادلة السلع والخدمات؟",
+                options: ["اقتصاد الائتمان", "اقتصاد المبادلة أو المقايضة", "الاقتصاد النقدي", "الاقتصاد الورقي"],
+                correct: 1,
+                hint: "قبل الفلوس، الناس جانت تنطي طماطة وتاخذ خبز.. شسموه هذا النظام؟",
+                explanation: "حسب بداية الملزمة (ص 3)، قبل ابتكار النقود اعتمد الإنسان على مقايضة ما ينتجه من سلع وخدمات مقابل سلع وخدمات أخرى يحتاجها لدى الآخرين، وهذا النظام يُعرف رسمياً بـ (اقتصاد المبادلة أو المقايضة)."
+            },
+            {
+                id: 2, page: 3, category: "اقتصاد المقايضة",
+                q: "أي من الآتي يعتبر التعريف الدقيق للمقايضة؟",
+                options: [
+                    "استخدام الذهب والفضة لشراء السلع",
+                    "عملية تبادل سلع مقابل سلع أو خدمات دون تدخل أداة وسيطة موحدة",
+                    "شراء السلع والدفع في وقت لاحق",
+                    "استخدام الأوراق النقدية لتسهيل التجارة"
+                ],
+                correct: 1,
+                hint: "سلعة بسلعة أو خدمة بخدمة رأساً بدون أي واسطة (نقود) بالنص!",
+                explanation: "تعرّف الملزمة في (ص 3) المقايضة على أنها عملية تبادل سلع مقابل سلع أخرى أو خدمات مقابل خدمات أخرى (أو أي توليفة بينهما) بشرط جوهري وهو عدم دخول أداة وسيطة موحدة مثل النقود."
+            },
+            {
+                id: 3, page: 3, category: "سلبيات المقايضة",
+                q: "أي من الخيارات التالية يُعد من أبرز سلبيات اقتصاد المقايضة؟",
+                options: ["توافر المعلومات عن أثمان السلع", "احتمال عدم توافق الرغبات", "سهولة تجزئة السلع والخدمات", "عدم وجود تكاليف تخزين"],
+                correct: 1,
+                hint: "أني عندي سمجة وأريد قميص، بس أبو القميص يريد تمن ما يريد سمج.. يعني الرغبات شبيها؟",
+                explanation: "من أبرز عيوب المقايضة في (ص 3) هو (احتمال عدم توافق الرغبات)؛ لأن إتمام المبادلة يشترط أن يملك الطرف الأول سلعة يرغب بها الطرف الثاني، وفي نفس الوقت يملك الطرف الثاني ما يرغب به الأول، وهذا نادراً ما يتصادف بسهولة."
+            },
+            {
+                id: 4, page: 3, category: "سلبيات المقايضة",
+                q: "في نظام المقايضة، الحاجة إلى التنقل بين الأسواق يترتب عليها:",
+                options: ["زيادة الأرباح", "ضياع الوقت والجهد", "انخفاض تكاليف التخزين", "ثبات قيم السلع"],
+                correct: 1,
+                hint: "تفر السوك كله شايل كونية حنطة على ظهرك تدور واحد يقايضك.. شيصير بوقتك وجهدك؟",
+                explanation: "توضح الملزمة في (ص 3) أن غياب وسيط تبادل موحد يجبر الفرد على التنقل المستمر بين الأسواق للبحث عن شخص تتوافق رغبته معه، مما يترتب عليه ضياع كبير في الوقت والجهد."
+            },
+            {
+                id: 5, page: 3, category: "سلبيات المقايضة",
+                q: "أي مما يلي يُعتبر من الصعوبات التي دفعت الإنسان للبحث عن بديل للمقايضة؟",
+                options: ["سهولة خزن السلع للأبد", "صعوبة تجزئة بعض السلع والخدمات واحتمال تلفها", "ثبات أسعار جميع السلع", "قلة الحاجة للمعلومات"],
+                correct: 1,
+                hint: "إذا عندك بقرة وتريد تشتري ربطة كرفس، شلون راح تقسم البقرة بالنص؟ صعوبة التجزئة والتلف!",
+                explanation: "في (ص 3)، اجتمعت 6 سلبيات دفعت الإنسان لابتكار النقود، منها: صعوبة تجزئة بعض السلع (كالماشية)، واحتمال تلف وتناقص قيم السلع بمرور الوقت، ووجود تكاليف نظير تخزينها."
+            },
+
+            // --- ص 4 (PDF Page 2) ---
+            {
+                id: 6, page: 4, category: "اقتصاد النقود",
+                q: "لكي يقبل الأفراد بديلاً عن المقايضة (كالنقود)، يجب أن يكون هذا البديل:",
+                options: ["مساوياً لوزن السلع", "قادراً على التقليل من سلبيات اقتصاد المبادلة", "مصنوعاً من الذهب فقط", "خاضعاً لتكاليف تخزين عالية"],
+                correct: 1,
+                hint: "إحنا ليش عفنا المقايضة أصلاً؟ علمود نخلص أو نقلل من سلبياتها!",
+                explanation: "تذكر الملزمة في مطلع (ص 4) أنه حتى يقبل الأفراد بأي بديل عن المقايضة، لا بد أن يكون هذا البديل قادراً على التقليل من سلبيات اقتصاد المبادلة ويوفر إيجابيات أفضل."
+            },
+            {
+                id: 7, page: 4, category: "أنواع النقود",
+                q: "النقود التي لها قيمة تبادلية إلى جانب قيمتها كسلعة (مثل الصوف والماشية والذهب) تُعرف بـ:",
+                options: ["النقود الورقية الإلزامية", "النقود السلعية", "النقود الائتمانية", "النقود الإلكترونية"],
+                correct: 1,
+                hint: "هي هم تشتغل نقود وهم سلعة تستفاد منها.. يعني اسمها على جسمها!",
+                explanation: "في (ص 4)، السلع والمعادن التي استخدمها الإنسان قديماً كأدوات للتبادل (مثل الصوف والماشية والمحاصيل الزراعية والذهب والفضة) كانت تمتلك قيمة تبادلية إلى جانب قيمتها الاستهلاكية كسلعة، ولذلك سُميت بـ (النقود السلعية)."
+            },
+            {
+                id: 8, page: 4, category: "أنواع النقود",
+                q: "النقد المستخدم حالياً والذي لا يمكن تحويله من ورق إلى أي شيء آخر يُطلق عليه:",
+                options: ["النقد السلعي", "نقد المقايضة", "النقد بأمر الحكومة", "النقد المعدني الكامل"],
+                correct: 2,
+                hint: "ورقة ما تتحول ذهب، بس تمشي بالسوك بقوة القانون وبأمر منو؟",
+                explanation: "في (ص 4)، النقود الورقية المتداولة حالياً لا يمكن تحويلها من ورق إلى ذهب أو أي معدن آخر لدى البنك المركزي، ولذلك يطلق عليها (النقد بأمر الحكومة) وتكتسب أهميتها من قبول الناس لها وقوة القانون."
+            },
+            {
+                id: 9, page: 4, category: "النقد بأمر الحكومة",
+                q: "في 'النقد بأمر الحكومة'، تتميز هذه الأداة النقدية بأن:",
+                options: [
+                    "قيمتها النقدية أكبر من قيمتها السوقية كسلعة",
+                    "قيمتها السوقية كورق أكبر من قيمتها النقدية",
+                    "الحكومة تتعهد بتحويلها إلى ذهب فوراً",
+                    "ليس لها أي قبول لدى الناس"
+                ],
+                correct: 0,
+                hint: "الـ 25 ألف دينار كـ ورقة ما تسوى فلسين، بس قيمتها النقدية بالسوك جبيرة!",
+                explanation: "توضح (ص 4) أن في (النقد بأمر الحكومة) تكون القيمة النقدية الاسمية للأداة أكبر بكثير من قيمتها السوقية كسلعة (كقطعة ورق وحبر)، ولا تتعهد الحكومة بتحويلها إلى أي شيء آخر."
+            },
+            {
+                id: 10, page: 4, category: "قاعدة الذهب",
+                q: "قامت قاعدة الذهب على أساس:",
+                options: [
+                    "إلغاء دور البنوك المركزية",
+                    "قبول البنوك المركزية والحكومات لاستبدال عملاتها بذهب",
+                    "استبدال العملات بالفضة فقط",
+                    "تحديد قيمة العملة بناءً على أسعار المحاصيل الزراعية"
+                ],
+                correct: 1,
+                hint: "تودي العملة للبنك المركزي، ينطوك بمكانها ذهب يلمع!",
+                explanation: "وفقاً لـ (ص 4)، تأسست (قاعدة الذهب) على مبدأ قبول البنوك المركزية والحكومات لاستبدال عملاتها بذهب، وتحديد قيمة كل عملة مقابل كمية محددة من الذهب، فأصبح الذهب هو العامل المشترك لتحديد أسعار الصرف."
+            },
+            {
+                id: 11, page: 4, category: "قاعدة الذهب",
+                q: "وفقاً لخصائص قاعدة الذهب، يجب أن يواكب عرض النقود المحلي:",
+                options: ["حجم الإنتاج الزراعي", "كمية الذهب المتوفرة بالبلاد", "عدد السكان فقط", "حجم الواردات"],
+                correct: 1,
+                hint: "بكد ما عدنا ذهب بالخزينة، نطبع فلوس.. حتى تبقى العلاقة ثابتة!",
+                explanation: "تنص الخاصية الثانية من خصائص قاعدة الذهب في (ص 4) على (ضرورة مواكبة عرض النقود المحلي لكمية الذهب المتوفرة بالبلاد)، وهي قاعدة أساسية للحفاظ على ثبات العلاقة بين العملة المحلية وما تساويه من ذهب."
+            },
+            {
+                id: 12, page: 4, category: "قاعدة الذهب",
+                q: "إحدى خصائص قاعدة الذهب هي استعداد الحكومة لاستبدال العملة المحلية بذهب:",
+                options: ["بحدود وقيود صارمة جداً", "دون حدود وقيود تفرض على كميات التبادل", "في أوقات الأزمات فقط", "للبنوك الأجنبية حصراً"],
+                correct: 1,
+                hint: "مفتوحة بحري! شكد ما تجيب عملة يبدلوها ذهب بدون حدود وقيود.",
+                explanation: "تنص الخاصية الثالثة لقاعدة الذهب في نهاية (ص 4) على استعداد الحكومة التام لاستبدال العملة المحلية بما يساويها من ذهب (دون حدود وقيود تفرض على كميات التبادل)."
+            },
+
+            // --- ص 5 (PDF Page 3) ---
+            {
+                id: 13, page: 5, category: "قاعدة الذهب",
+                q: "إذا زاد الطلب على الذهب من أجل الزينة، فإن ذلك يؤدي إلى:",
+                options: [
+                    "زيادة الغطاء التام لكمية النقد المُصدر",
+                    "تناقص كمية الذهب المتوفرة لتوفير الغطاء التام للنقد المصدر",
+                    "انخفاض أسعار السلع فوراً",
+                    "لا تأثير له على الغطاء النقدي"
+                ],
+                correct: 1,
+                hint: "إذا الذهب كله راح بسوك الصاغة وصار محابس وبتوت، شراح يبقى بغطاء البنك المركزي؟ يقل أكيد!",
+                explanation: "حسب الملاحظة في أعلى (ص 5)، الذهب كان يُستخدم لأغراض النقد ولأغراض الزينة معاً؛ لذلك فإن زيادة الطلب على الذهب لأغراض الزينة تؤدي إلى سحبه من السوق وتناقص كمية الذهب المتوفرة لتوفير الغطاء التام للنقد المصدر."
+            },
+            {
+                id: 14, page: 5, category: "قانون جريشم",
+                q: "حسب قانون جريشم، إذا تواجدت عملتان متساويتان في القيمة الاسمية إحداهما تحوي ذهباً بنسبة 100% والأخرى بنسبة 50%، فإن الجمهور سيفضل:",
+                options: [
+                    "استخدام العملة ذات الـ 100% في التبادل",
+                    "استخدام العملة ذات الـ 50% في التبادل والاحتفاظ بالأولى",
+                    "إذابة العملة ذات الـ 50% فقط",
+                    "التخلص من العملة الذهبية الكاملة في السوق"
+                ],
+                correct: 1,
+                hint: "المواطن ذكي، يضم العملة الزينة (أم الـ 100%) جوة الكاشية، ويصرف العملة التعبانة (أم الـ 50%) بالسوك!",
+                explanation: "يوضح مثال قانون جريشم في (ص 5) أنه طالما القيمة الاسمية للعملتين متساوية في السوق، فإن الجمهور سيحتفظ بالعملة الأولى الجيدة (ذات الـ 100% ذهب) كمخزن للثروة، ويفضل الدفع والتبادل بالعملة الثانية الأقل محتوى من الذهب (50%)."
+            },
+            {
+                id: 15, page: 5, category: "قانون جريشم",
+                q: "في مثال قانون جريشم، إذا ارتفع سعر الذهب كمعدن، ماذا سيفعل الجمهور بالعملة المعدنية ذات المحتوى الذهبي العالي؟",
+                options: [
+                    "يدفعهم إلى إذابة العملة الذهبية للحصول على المعدن واختفائها من التداول",
+                    "يرمونها في الشارع",
+                    "يستخدمونها لشراء الخبز بالسعر القديم",
+                    "يسلمونها مجاناً للبنك"
+                ],
+                correct: 0,
+                hint: "يموعون العملة الذهبية ويبيعوها كذهب خام لأن قيمتها صارت أغلى، فتختفي من السوك!",
+                explanation: "في (ص 5)، عند ارتفاع سعر الذهب في السوق، تصبح قيمة المعدن داخل العملة الذهبية أعلى من قيمتها الاسمية، مما يدفع الجمهور إلى إذابة (صهر) العملة المعدنية الذهبية للحصول على المعدن، فتخرج من التداول وتختفي."
+            },
+            {
+                id: 16, page: 5, category: "قانون جريشم",
+                q: "المقولة الاقتصادية الشهيرة التي تلخص قانون جريشم بناءً على تفضيل الأفراد هي:",
+                options: [
+                    "النقود الجيدة تطرد النقود السيئة",
+                    "تفضيل الأفراد استخدام النقود السيئة يدفع النقود الجيدة خارج التداول",
+                    "النقود الورقية أفضل من الذهب دائماً",
+                    "التضخم يزيد من قيمة النقود المحلية"
+                ],
+                correct: 1,
+                hint: "الفلوس التعبانة تبقى تفتر بالسوك، والزينة تنضم.. يعني النقود السيئة تطرد الجيدة خارج التداول!",
+                explanation: "خلاصة قانون جريشم في (ص 5) هي أن (تفضيل الأفراد استخدام النقود السيئة يدفع النقود الجيدة خارج التداول) حرصاً من الأفراد على الحفاظ على ثرواتهم باكتناز النقود الجيدة وصرف النقود السيئة."
+            },
+            {
+                id: 17, page: 5, category: "قانون جريشم والتضخم",
+                q: "في الدول التي تتعرض نقودها إلى تناقص في قيمتها بسبب التضخم، يتجه الناس عادة إلى:",
+                options: [
+                    "الاحتفاظ بالنقد المحلي في المنازل",
+                    "استبدالها بنقد أجنبي والاحتفاظ به كعملة جيدة",
+                    "زيادة مدخراتهم بالعملة المحلية المتدهورة",
+                    "إيقاف جميع عمليات الشراء"
+                ],
+                correct: 1,
+                hint: "من يصعد التضخم وتوكع العملة، الناس كبل تركض تشتري دولار وتضمه!",
+                explanation: "تذكر الفقرة الأخيرة في (ص 5) كتطبيق حديث لقانون جريشم: في الدول التي تعاني من التضخم وتدهور عملتها المحلية (نقود سيئة)، يتجه الناس نحو استبدالها بنقد أجنبي مستقر (نقود جيدة) والاحتفاظ به."
+            },
+            {
+                id: 18, page: 5, category: "قانون جريشم والتضخم",
+                q: "الهدف من استخدام النقد المحلي بسرعة في عمليات التبادل خلال فترات التضخم هو:",
+                options: [
+                    "التخلص منه بسرعة للحصول على سلع وخدمات أو عملات أجنبية",
+                    "تخفيض أسعار السلع في الأسواق",
+                    "دعم البنك المركزي",
+                    "زيادة القوة الشرائية للعملة المحلية"
+                ],
+                correct: 0,
+                hint: "يخلصون من العملة المحلية بأسرع وكت لأن قيمتها جاي تذوب، فيشترون بيها غراض أو عملة صعبة.",
+                explanation: "توضح نهاية (ص 5) أن الأفراد يستخدمون النقد المحلي المتدهور في عمليات التبادل بهدف التخلص منه بسرعة قبل أن يفقد المزيد من قيمته، وذلك للحصول على سلع وخدمات حقيقية أو عملات أجنبية."
+            },
+
+            // --- ص 6 (PDF Page 4) ---
+            {
+                id: 19, page: 6, category: "تعريف النقود",
+                q: "يعود السبب في أن معنى النقود لا يزال محل جدل إلى:",
+                options: [
+                    "ثبات النشاط الاقتصادي وعدم تغيره",
+                    "أهمية النقود في التأثير على الاقتصاد والطبيعة الديناميكية لمفهومها",
+                    "عدم وجود عملات ورقية كافية",
+                    "رفض الاقتصاديين لدراسة النقود"
+                ],
+                correct: 1,
+                hint: "الفلوس متطورة ومتغيرة (ديناميكية) من وقت لآخر وتأثيرها جبير، فصعب نحصرها بتعريف جامد.",
+                explanation: "في مطلع (ص 6)، يرجع الجدل حول تعريف النقود إلى سببين: الأول هو الأهمية الكبرى للنقود في النشاط الاقتصادي، والثاني هو (الطبيعة الديناميكية لمفهوم النقود) وتغير ماهيتها من وقت لآخر ومن دولة لأخرى حسب التطور الاقتصادي."
+            },
+            {
+                id: 20, page: 6, category: "مداخل تعريف النقود",
+                q: "المدخل الذي يُعرّف النقود بأنها 'سندات بحجم ولون معين مع رموز مطبوعة وعملات معدنية' هو:",
+                options: ["المدخل الفني", "المدخل القانوني", "المدخل الوظيفي", "المدخل المادي"],
+                correct: 3,
+                hint: "يركز على الشكل واللون والحجم والمادة المطبوعة.. يعني يا مدخل؟ المادي!",
+                explanation: "في (ص 6)، يركز (المدخل المادي لتعريف النقود) على المظهر المادي الملموس للعملة، فيعرفها بأنها سندات بحجم ولون معين مع كلمات ورموز مطبوعة عليها، أو عملات معدنية من نوع معين."
+            },
+            {
+                id: 21, page: 6, category: "مداخل تعريف النقود",
+                q: "يُعاب على المدخل المادي لتعريف النقود أنه:",
+                options: [
+                    "واسع جداً ويشمل كل شيء",
+                    "يحصر النقود في نطاق ضيق للغاية ويتجاهل الأشكال الأخرى كالنقود الإلكترونية",
+                    "يركز على الجانب القانوني فقط",
+                    "يعتمد على وظائف النقود الاقتصادية"
+                ],
+                correct: 1,
+                hint: "حصر الفلوس بس بالورق والحديدة، ونسى الأحجار قديماً والماستر كارد والنقود الإلكترونية حديثاً!",
+                explanation: "حسب (ص 6)، العيب الرئيسي للمدخل المادي هو أنه يحصر النقود في نطاق ضيق للغاية (ورق ومعدن)، متجاهلاً الأشكال التاريخية كالأحجار، والتطورات الحديثة مثل النقود المصرفية والنقود الإلكترونية."
+            },
+            {
+                id: 22, page: 6, category: "مداخل تعريف النقود",
+                q: "المدخل الذي يُعرّف النقود بأنها 'أداة فنية اكتشفها الإنسان ليتخلص من خلالها من صعوبات المقايضة' هو:",
+                options: ["المدخل الفني", "المدخل الوظيفي", "المدخل المادي", "المدخل القانوني"],
+                correct: 0,
+                hint: "مغششك بنص السؤال! يكلك (أداة فنية) يعني المدخل الفني.",
+                explanation: "في (ص 6)، يُعرّف (المدخل الفني) النقود بشكل مختصر على أنها أداة فنية ابتكرها الإنسان للتغلب على صعوبات وسلبيات نظام المقايضة."
+            },
+            {
+                id: 23, page: 6, category: "مداخل تعريف النقود",
+                q: "القصور الكبير في المدخل الفني لتعريف النقود يكمن في أنه:",
+                options: [
+                    "لا يعترف بالعملات المعدنية",
+                    "لا يظهر الأساس الذي ترتكز عليه النقود في مباشرة وظائفها في الحياة الاقتصادية",
+                    "يشترط إبراء الذمة قانوناً",
+                    "يركز على النقود الإلكترونية فقط"
+                ],
+                correct: 1,
+                hint: "كال أداة فنية وسكت، ما وضح الأساس اللي تشتغل عليه النقود بالاقتصاد.",
+                explanation: "توضح (ص 6) أن المدخل الفني يعاني من قصور كبير لأنه يكتفي بذكر سبب اكتشاف النقود دون أن يظهر الأساس الذي ترتكز عليه النقود في مباشرة وظائفها في الحياة الاقتصادية."
+            },
+            {
+                id: 24, page: 6, category: "مداخل تعريف النقود",
+                q: "'ذلك الشيء الذي تتوافر فيه القدرة على إبراء الذمة وتتمتع بالقبول العام للوفاء بالالتزامات' هو تعريف النقود حسب:",
+                options: ["المدخل الفني", "المدخل المادي", "المدخل القانوني", "المدخل الوظيفي"],
+                correct: 2,
+                hint: "بيها مصطلح محاكم وعقود (إبراء الذمة والوفاء بالالتزامات).. يعني قانوني!",
+                explanation: "في نهاية (ص 6)، يربط (المدخل القانوني) تعريف النقود بقوة القانون، فيعرفها بأنها الشيء الذي تتوافر فيه القدرة القانونية على إبراء الذمة والوفاء بالالتزامات والديون داخل المجتمع."
+            },
+
+            // --- ص 7 (PDF Page 5) ---
+            {
+                id: 25, page: 7, category: "مداخل تعريف النقود",
+                q: "مما يعاب على المدخل القانوني وجود اختلاف مع المنظور الاقتصادي، حيث أن الاقتصاديين:",
+                options: [
+                    "يرفضون النقود الورقية تماماً",
+                    "لم يشترطوا القدرة القانونية على إبراء الذمة وإنما اشترطوا القبول العام كوسيط للتبادل",
+                    "يشترطون أن تكون النقود من الذهب حصراً",
+                    "يعتمدون على لون وحجم العملة"
+                ],
+                correct: 1,
+                hint: "الاقتصاديين يكولون المهم الناس تقبل بيها بالسوك (قبول عام) مو شرط قانون محكمة.",
+                explanation: "في أعلى (ص 7)، يظهر الاختلاف بين القانونيين والاقتصاديين؛ فالاقتصاديون لم يشترطوا تمتع النقود بالقدرة القانونية الإجبارية على إبراء الذمة، بل اعتبروا النقود أي شيء يلقى (قبولاً عاماً) كوسيط للتبادل حتى لو لم يكن عملة قانونية رسمية (مثل الودائع والشيكات)."
+            },
+            {
+                id: 26, page: 7, category: "مداخل تعريف النقود",
+                q: "المدخل الذي يُعرّف النقود بأنها 'أي شيء ذات قبول عام في التداول ويستخدم وسيطاً ومقياساً ومستودعاً للقيمة ووسيلة للمدفوعات الآجلة' هو:",
+                options: ["المدخل الوظيفي", "المدخل القانوني", "المدخل المادي", "المدخل الفني"],
+                correct: 0,
+                hint: "عددلك وظائف النقود الأربعة بالتعريف.. فهذا المدخل الوظيفي!",
+                explanation: "في (ص 7)، يقوم (المدخل الوظيفي) بتعريف النقود استناداً إلى الوظائف الأربع التي تؤديها في الاقتصاد: وسيط للتداول، مقياس للقيمة، مستودع ومخزن للقيمة، ووسيلة للمدفوعات الآجلة."
+            },
+            {
+                id: 27, page: 7, category: "تحليل المدخل الوظيفي",
+                q: "ما الذي يستدل به المدخل الوظيفي للوصول إلى تعريف النقود؟",
+                options: ["شكل ووزن النقود", "القانون والتشريعات فقط", "وظائف النقود التي تؤديها في الاقتصاد", "الغطاء الذهبي للعملة"],
+                correct: 2,
+                hint: "اسمه المدخل الوظيفي، يعني يستدل بوظائف النقود!",
+                explanation: "ينص المدخل الوظيفي في (ص 7) صراحةً على أنه (يستخدم وظائف النقود لكي يستدل على تعريفها)، أي أن النقود تُعرف بما تؤديه من مهام اقتصادية."
+            },
+            {
+                id: 28, page: 7, category: "تحليل المدخل الوظيفي",
+                q: "من خلال تحليل تعريف المدخل الوظيفي، نلاحظ أن التعريف مبني على:",
+                options: [
+                    "القوانين الصارمة للدولة فقط",
+                    "الجوانب النفسية لأفراد المجتمع والقائم على ثقة الأفراد فيما يقبلونه للدفع والتبادل",
+                    "الوزن الفعلي للسبائك الذهبية",
+                    "قرارات الصاغة فقط"
+                ],
+                correct: 1,
+                hint: "الشغلة نفسية! ثقة الناس بالعملة وقبولهم الها هي اللي تنطيها قوة شرائية.",
+                explanation: "في النقطة (1) من تحليل المدخل الوظيفي (ص 7)، تذكر الملزمة أن هذا التعريف مبني على (الجوانب النفسية لأفراد المجتمع) القائمة على ثقة الأفراد فيما يقبلونه كوسيلة للدفع والتبادل، وهذا القبول هو ما يمنحها قوة شرائية."
+            },
+            {
+                id: 29, page: 7, category: "تطور النقود الورقية",
+                q: "مع زيادة حجم المعاملات التجارية قديماً، أصبح حمل الذهب يمثل عبئاً كبيراً، مما أدى إلى ظهور:",
+                options: [
+                    "النقود الإلكترونية مباشرة",
+                    "النقود الورقية على أيدي الصاغة الذين كانوا يقبلون الودائع الذهبية مقابل إيصالات",
+                    "بطاقات الصراف الآلي",
+                    "نظام المقايضة الزراعي"
+                ],
+                correct: 1,
+                hint: "الذهب ثكيل وينباك بالطريق، فكاموا يضموه يم الصايغ وياخذون وصل ورقي (إيصال) يتعاملون بيه!",
+                explanation: "توضح (ص 7) أنه عندما ازدادت التجارة وأصبح حمل السبائك والمسكوكات الذهبية عبئاً ثقيلاً، ظهرت النقود الورقية لأول مرة على أيدي (الصاغة) الذين قبلوا ودائع الذهب من التجار وأعطوهم إيصالات أو شهادات ورقية صارت تُتداول في السوق."
+            },
+            {
+                id: 30, page: 7, category: "تطور النقود",
+                q: "بعد شيوع استخدام إيصالات الصاغة وتدخل الحكومات لتنظيم التداول، ما الذي أصبح يمثل الشكل الحديث للنقود بعد انتهاء عهد النقود الذهبية؟",
+                options: [
+                    "المسكوكات الفضية والبرونزية",
+                    "النقود الورقية والودائع المصرفية التي تتداول عن طريق الشيكات",
+                    "الماشية والمحاصيل",
+                    "السبائك الذهبية فقط"
+                ],
+                correct: 1,
+                hint: "الورق النقدي والودائع بالمصارف (الشيكات) صارت هي الشكل الحديث للنقود.",
+                explanation: "حسب (ص 7)، بعد تدخل الحكومات لتنظيم التداول وانتهاء عهد النقود الذهبية تماماً، أصبحت (النقود الورقية والودائع المصرفية التي تتداول عن طريق الشيكات) تمثل الشكل الحديث للنقود."
+            },
+            {
+                id: 31, page: 7, category: "تحليل المدخل الوظيفي",
+                q: "استخدام كلمة (أي شيء) في تعريف المدخل الوظيفي له أهمية وشمولية لأنه يدل على:",
+                options: [
+                    "العدد المحدود جداً للعملات",
+                    "العدد غير المحدود من الأشياء التي استخدمت كالنقود عبر التاريخ",
+                    "ضعف قيمة النقود",
+                    "إلغاء دور البنوك"
+                ],
+                correct: 1,
+                hint: "(أي شيء) تعني شمولية وأشياء مالها حدود استُخدمت كفلوس.",
+                explanation: "في نهاية النقطة (1) بـ (ص 7)، تؤكد الملزمة أن استخدام عبارة (أي شيء) في التعريف له أهمية وشمولية كبيرة حيث تدل على العدد غير المحدود من الأشياء التي استُخدمت كنقود (من السلع والمعادن إلى الورق والودائع)."
+            },
+            {
+                id: 32, page: 7, category: "العملات القانونية",
+                q: "إن التشريعات التي تصدرها الدول لإعطاء الصفة القانونية على العملات الورقية والمصرفية تستهدف:",
+                options: [
+                    "زيادة الضرائب على التجار",
+                    "تدعيم ثقة الأفراد في قبول أي أصل كنقود بحيث لا يمكن رفضها في سداد الديون",
+                    "منع تداول الشيكات نهائياً",
+                    "إجبار الناس على شراء الذهب"
+                ],
+                correct: 1,
+                hint: "القانون يقوي ثقة الناس بالعملة، ومحد يكدر يكلك ما أقبل فلوسك من تسدد دينك.",
+                explanation: "وفقاً للنقطة (2) في (ص 7)، التشريعات الحكومية التي تضفي الصفة القانونية على العملات تستهدف (تدعيم ثقة الأفراد) في قبولها كنقود، وبموجبها لا يمكن لأي دائن رفض العملات القانونية عند سداد الديون."
+            },
+            {
+                id: 33, page: 7, category: "الحسابات الجارية",
+                q: "الحسابات الجارية بالبنوك التجارية تتصف بأنها:",
+                options: [
+                    "تتمتع بالوضع القانوني كعملة قانونية إجبارية بحد ذاتها",
+                    "ليس لها الوضع القانوني كعملة قانونية، إلا أن البنوك ملتزمة بتحويلها لعملة قانونية بطلب المودعين",
+                    "ممنوعة من السحب النقدي",
+                    "لا علاقة لها بالبنوك التجارية"
+                ],
+                correct: 1,
+                hint: "الحساب الجاري مو عملة قانونية إجبارية بنفسه، بس البنك مجبور يصرفلكياه كاش قانوني شوكت ما تطلب (تكملة الجملة بأول سطر ص 8).",
+                explanation: "في نهاية (ص 7) ومطلع (ص 8)، توضح الملزمة أنه بالرغم من أن الحسابات الجارية بالبنوك التجارية ليس لها الوضع القانوني كعملة قانونية إلزامية بحد ذاتها، إلا أن البنوك ملتزمة بتحويل هذه الحسابات إلى عملة قانونية (نقد سائل) بناءً على طلب المودعين."
+            },
+
+            // --- ص 8 (PDF Page 6) ---
+            {
+                id: 34, page: 8, category: "قياس حجم النقود",
+                q: "إن الهدف من تعريف وقياس حجم النقود في المجتمع هو تمكين صانعي السياسة الاقتصادية من:",
+                options: [
+                    "زيادة معدلات التضخم",
+                    "السيطرة والرقابة على حجم النقود المتداولة لتحقيق استقرار الأسعار وازدياد النشاط الاقتصادي",
+                    "إلغاء العملات الورقية",
+                    "تقليل الإنتاج المحلي"
+                ],
+                correct: 1,
+                hint: "علمود يراقبون كمية الفلوس بالسوك ويحافظون على استقرار الأسعار ونمو الاقتصاد.",
+                explanation: "في أعلى (ص 8)، الهدف الأساسي من تعريف وقياس حجم النقود هو تمكين صانعي السياسة الاقتصادية من السيطرة والرقابة على حجم النقود المتداولة، بغرض تحقيق استقرار المستوى العام للأسعار وازدياد مستوى النشاط الاقتصادي."
+            },
+            {
+                id: 35, page: 8, category: "وظائف النقود",
+                q: "مقدار السعادة أو الرضا والإشباع الذي يحصل عليه المرء من النقود هو مشتق من:",
+                options: [
+                    "لون الورقة النقدية وحجمها",
+                    "ما تستطيع النقود أن توفره له من سلع وخدمات ناتجة عن وظائفها",
+                    "عدد العملات المعدنية في جيبه",
+                    "تخزين النقود وعدم إنفاقها"
+                ],
+                correct: 1,
+                hint: "الفلوس مو غاية بحد ذاتها، الونسة تجي من السلع والخدمات اللي تشتريها بيها!",
+                explanation: "تحت عنوان وظائف النقود في (ص 8)، توضح المحاضرة أن مقدار السعادة أو الرضا والإشباع الذي يحصل عليه الفرد لا يأتي من ذات الورقة النقدية، بل هو مشتق مما تستطيع النقود أن توفره له من سلع وخدمات."
+            },
+            {
+                id: 36, page: 8, category: "وظائف النقود",
+                q: "كم عدد الوظائف الأساسية للنقود التي لخصتها المحاضرة؟",
+                options: ["وظيفتان", "ثلاث وظائف", "أربع وظائف أساسية", "ست وظائف"],
+                correct: 2,
+                hint: "تبادل (1)، قياس (2)، مخزن للقيمة (3)، مدفوعات آجلة (4).. يعني أربع وظائف!",
+                explanation: "لخصت المحاضرة في (ص 8) مهام النقود في (أربع وظائف أساسية) وهي: أداة للتبادل، وحدة قياس للأثمان، حافظ أو مخزن للقيمة، ومعيار للمدفوعات الآجلة."
+            },
+            {
+                id: 37, page: 8, category: "وظيفة أداة التبادل",
+                q: "ما الذي يميز النقد ويدعم قدرة المرء على مبادلة سلعة لديه بمبلغ نقدي ثم شراء ما يرغب؟",
+                options: [
+                    "كونه مصنوعاً من الفضة",
+                    "قبوله من قبل الجميع مما يضفي عليه ثقة الجمهور كأداة لإتمام المعاملات",
+                    "صعوبة نقله من سوق لآخر",
+                    "عدم اعتراف التجار به"
+                ],
+                correct: 1,
+                hint: "الكل يقبل بيه ويثق بيه بالسوك.",
+                explanation: "في الوظيفة الأولى (ص 8)، ما يميز النقد كأداة للتبادل هو (قبوله من قبل الجميع)، مما يضفي عليه ثقة الجمهور لإتمام المعاملات التجارية ببيع السلع مقابل نقد ثم شراء أي سلع أخرى."
+            },
+            {
+                id: 38, page: 8, category: "وظيفة أداة التبادل",
+                q: "من الانعكاسات الإيجابية لاستخدام النقود كأداة للتبادل مقارنة باقتصاد المقايضة:",
+                options: [
+                    "توفير وقت أكبر للتخصص في الإنتاج وقيام الأفراد بالأعمال التي يتقنونها",
+                    "زيادة الوقت المهدور في البحث في الأسواق",
+                    "إجبار الأفراد على القيام بأعمال لا يتقنونها",
+                    "دمج البيع والشراء في لحظة واحدة"
+                ],
+                correct: 0,
+                hint: "بدل ما تضيع وقتك تدور بالسوك، تكعد تتخصص بشغلك اللي تتقنه وتنتج براحتك.",
+                explanation: "في (ص 8)، وفرت النقود كأداة للتبادل الوقت والجهد الذي كان يهدر في البحث بالأسواق زمن المقايضة، مما وفر وقتاً أكبر للتخصص وتقسيم العمل وقيام الأفراد بالأعمال الإنتاجية التي يتقنونها."
+            },
+            {
+                id: 39, page: 8, category: "وظيفة أداة التبادل",
+                q: "أي وظيفة من وظائف النقود ساهمت في 'استقلال عمليات البيع عن عمليات الشراء'؟",
+                options: [
+                    "معيار للمدفوعات الآجلة",
+                    "أداة للتبادل",
+                    "وحدة قياس الحسابات فقط",
+                    "قاعدة الذهب"
+                ],
+                correct: 1,
+                hint: "تكدر تبيع سلعتك اليوم وتقبض فلوس، وتشتري غير سلعة من غير طرف.. بفضل كونها أداة للتبادل.",
+                explanation: "تذكر (ص 8) أن وظيفة النقود كـ (أداة للتبادل) ساهمت في استقلال عمليات البيع عن عمليات الشراء، فلم يعد البائع مضطراً لأن يشتري سلعة فوراً من نفس الشخص الذي باع له."
+            },
+            {
+                id: 40, page: 8, category: "وحدة قياس للأثمان",
+                q: "ما هي المعادلة الرياضية المستخدمة لمعرفة عدد معدلات التبادل في عالم المقايضة (حيث ن = عدد السلع)؟",
+                options: [
+                    "ن / 2",
+                    "(ن × 2) - 1",
+                    "ن (ن - 1) / 2",
+                    "ن × ن"
+                ],
+                correct: 2,
+                hint: "معادلة صفحة 8 الشهيرة: ن مضروبة في (ن ناقص 1) الكل تقسيم 2.",
+                explanation: "في أسفل (ص 8)، المعادلة الرياضية لحساب عدد معدلات التبادل (القيم التبادلية) في نظام المقايضة هي: [ ن (ن - 1) ] / 2، حيث تمثل (ن) عدد السلع المتداولة في السوق."
+            },
+            {
+                id: 41, page: 8, category: "وحدة قياس للأثمان",
+                q: "في عالم المقايضة وفي ظل وجود 10 سلع، إذا كان للسلعة الأولى 9 أسعار، فكم سعراً يتبقى للسلعة الثانية (بعد معرفة سعرها مقابل الأولى)؟",
+                options: ["تسعة أسعار", "ثمانية أسعار", "سبعة أسعار", "عشرة أسعار"],
+                correct: 1,
+                hint: "الأولى أخذت 9 أسعار، الثانية شكد يبقالها؟ تنقص واحد وتصير 8 أسعار (وللثالثة 7 وهكذا)!",
+                explanation: "توضح الفقرة الثانية في (ص 8) أنه في ظل وجود 10 سلع بالمقايضة، يكون للسلعة الأولى 9 أسعار مقابل السلع التسع الأخرى، ويكون للسلعة الثانية (8 أسعار) لأن سعرها مقابل السلعة الأولى قد عُرف مسبقاً، وللثالثة 7 أسعار وهكذا."
+            },
+
+            // --- ص 9 (PDF Page 7) ---
+            {
+                id: 42, page: 9, category: "وحدة قياس للأثمان",
+                q: "في حالة وجود 10 سلع في نظام المقايضة، كم سيكون إجمالي عدد معدلات التبادل (القيم التبادلية)؟",
+                options: ["10 قيم تبادلية", "25 قيمة تبادلية", "45 قيمة تبادلية", "90 قيمة تبادلية"],
+                correct: 2,
+                hint: "10 × 9 تقسيم 2 = 45 قيمة تبادلية!",
+                explanation: "بتطبيق المعادلة في نهاية (ص 8) ومطلع (ص 9) على 10 سلع: [ 10 × (10 - 1) ] ÷ 2 = (10 × 9) ÷ 2 = 45 قيمة تبادلية."
+            },
+            {
+                id: 43, page: 9, category: "وحدة قياس للأثمان",
+                q: "باستخدام النقود كوحدة قياس للأثمان في سوق يضم 10 سلع، يتقلص عدد الأسعار من 45 قيمة تبادلية إلى:",
+                options: ["سعر واحد فقط", "5 أسعار", "10 أسعار نقدية (سعر نقدي لكل سلعة)", "20 سعراً"],
+                correct: 2,
+                hint: "كل سلعة نحطلها سعر نقدي واحد خاص بيها.. 10 سلع يعني 10 أسعار بس!",
+                explanation: "في أعلى (ص 9)، عند استخدام النقود كوحدة قياس للأثمان في سوق يضم 10 سلع، يتقلص عدد الأسعار من 45 معدل تبادل إلى (10 أسعار نقدية فقط)، حيث يوضع سعر نقدي واحد لكل سلعة."
+            },
+            {
+                id: 44, page: 9, category: "وحدة قياس للأثمان",
+                q: "أي وظيفة للنقود سهّلت من عملية إعداد القوائم الحسابية والقيود الحسابية ومقارنة الحسابات؟",
+                options: ["وسيط المدفوعات الآجلة", "مخزن للقيمة", "أداة للتبادل", "وحدة قياس للأثمان"],
+                correct: 3,
+                hint: "قوائم وقيود حسابية ومقارنة أرقام.. يعني نحتاج وحدة قياس!",
+                explanation: "توضح (ص 9) أن استخدام النقود كـ (وحدة قياس للأثمان) يردّ قيم جميع السلع والخدمات إلى وحدة قياس واحدة مشتركة، مما سهّل إعداد القوائم الحسابية والقيود المحاسبية ومقارنة الحسابات."
+            },
+            {
+                id: 45, page: 9, category: "مخزن أو مستودع للقيمة",
+                q: "قيام الفرد ببيع سلعة يقتنيها والاحتفاظ بقيمتها على شكل نقود لإنفاقها في المستقبل بدلاً من سلع معرضة للتلف، يعبر عن وظيفة النقود كـ:",
+                options: ["أداة للمقايضة", "حافظ أو مخزن أو مستودع للقيمة", "وحدة قياس آنية فقط", "عملة معدنية"],
+                correct: 1,
+                hint: "يضم الفلوس للمستقبل بدون ما تتلف أو يدفع إيجار مخزن.. يعني مخزن أو مستودع للقيمة!",
+                explanation: "في الوظيفة الثالثة (ص 9)، عندما يبيع الفرد سلعته ويحتفظ بالنقود لإنفاقها في المستقبل بدلاً من تخزين سلع قد تتلف أو تكلفه مصاريف تخزين، فإن النقود تعمل هنا كـ (حافظ أو مخزن أو مستودع للقيمة)."
+            },
+            {
+                id: 46, page: 9, category: "مخزن أو مستودع للقيمة",
+                q: "تتوقف فاعلية النقود كمخزن أو مستودع للقيمة على:",
+                options: [
+                    "وزنها المعدني فقط",
+                    "فاعليتها كمقياس للقيمة واحتفاظها بقوتها الشرائية لفترة زمنية طويلة",
+                    "تغير لونها كل سنة",
+                    "ارتفاع معدلات التضخم"
+                ],
+                correct: 1,
+                hint: "لازم تحافظ على قوتها الشرائية لفترة طويلة وما تطير قيمتها وية الوكت.",
+                explanation: "تؤكد (ص 9) أن فاعلية النقود كمخزن أو مستودع للقيمة تتوقف على فاعليتها كمقياس للقيمة، بحيث يجب أن تحتفظ بقوتها الشرائية لفترة زمنية طويلة دون تدهور."
+            },
+            {
+                id: 47, page: 9, category: "مخزن أو مستودع للقيمة",
+                q: "لكي تحتفظ النقود بقوتها الشرائية لفترة زمنية طويلة ويبقى مستوى الأسعار ثابتاً نسبياً، يتطلب ذلك:",
+                options: [
+                    "طباعة النقود بكميات غير محدودة",
+                    "الثبات النسبي لكل من العرض والطلب على النقود",
+                    "إلغاء البنوك التجارية",
+                    "مضاعفة الأسعار سنوياً"
+                ],
+                correct: 1,
+                hint: "العرض والطلب على النقود لازم يكونون مستقرين وثابتين نسبياً.",
+                explanation: "تذكر (ص 9) أن احتفاظ النقود بقوتها الشرائية لفترة طويلة يعني (الثبات النسبي لكل من العرض والطلب على النقود) حتى يبقى المستوى العام للأسعار ثابتاً نسبياً."
+            },
+            {
+                id: 48, page: 9, category: "القيمة الحقيقية للنقود",
+                q: "ترتفع القيمة الحقيقية للنقود بالتدهور (الانخفاض) الذي يلحق المستوى العام للأسعار في فترات:",
+                options: ["التضخم", "الانكماش", "الحروب الاقتصادية", "الرواح المالي المفرط"],
+                correct: 1,
+                hint: "من ترخص الأسعار بالسوك (انكماش)، الفلوس تصير الها هيبة وتشتري غراض أكثر!",
+                explanation: "توضح (ص 9) وجود علاقة عكسية بين الأسعار وقيمة النقود؛ فالقيمة الحقيقية للنقود (قوتها الشرائية) ترتفع عندما ينخفض المستوى العام للأسعار في فترات (الانكماش)."
+            },
+            {
+                id: 49, page: 9, category: "القيمة الحقيقية للنقود",
+                q: "تنخفض القيمة الحقيقية للنقود وتفقد قوتها الشرائية في فترات:",
+                options: ["الانكماش", "هبوط الأسعار", "التضخم", "ثبات الأسعار"],
+                correct: 2,
+                hint: "من تغلى الأسعار وتعلّك (تضخم)، الفلوس تفقد قيمتها الحقيقية.",
+                explanation: "حسب (ص 9)، تنخفض القيمة الحقيقية للنقود وتضعف قوتها الشرائية في فترات (التضخم) نتيجة الارتفاع المستمر في المستوى العام للأسعار."
+            },
+            {
+                id: 50, page: 9, category: "الأصول الحقيقية والتضخم",
+                q: "في فترات التضخم واستمرار ارتفاع الأسعار، يلجأ الأفراد للحفاظ على ثرواتهم إلى الاحتفاظ بالقيمة في صورة:",
+                options: ["نقود ورقية تحت الوسادة", "أصول حقيقية (عقارات، سلع، إلخ)", "عملات محلية متدهورة", "حسابات بدون عائد"],
+                correct: 1,
+                hint: "يشترون كاع، بيت، ذهب (أصول حقيقية) لأن الكاش يخسر بالتضخم.",
+                explanation: "تذكر (ص 9) أنه في فترات التضخم واستمرار ارتفاع الأسعار، يتجنب الأفراد الاحتفاظ بالنقود السائلة ويلجأون إلى الاحتفاظ بالقيمة في صورة (أصول حقيقية) لحماية ثرواتهم."
+            },
+            {
+                id: 51, page: 9, category: "الأصول الحقيقية والتضخم",
+                q: "من مزايا الاحتفاظ بالأصول الحقيقية في فترات التضخم أنها:",
+                options: [
+                    "تدر عائداً لصاحبها (ربح، فائدة، ريع) فضلاً عن تحقيق أرباح رأسمالية عند ارتفاع الأسعار",
+                    "تخسر قيمتها فوراً عند ارتفاع الأسعار",
+                    "لا تحتاج لأي وقت عند بيعها",
+                    "تعتبر عملة قانونية لدفع الضرائب مباشرة"
+                ],
+                correct: 0,
+                hint: "العقار هم يجيب إيجار/عائد، وهم يصعد سعره بالسوك فيحقق ربح رأسمالي!",
+                explanation: "توضح (ص 9) أن للاحتفاظ بالأصول الحقيقية ميزتين: الأولى أنها تدر عائداً دورياً لصاحبها في صورة (ربح، فائدة، أو ريع)، والثانية أنها تحقق (أرباحاً رأسمالية) عند ارتفاع أسعارها في السوق."
+            },
+            {
+                id: 52, page: 9, category: "الأصول الحقيقية والتضخم",
+                q: "من ناحية أخرى، ما هي السلبية أو المخاطرة في الاحتفاظ بالأصول الحقيقية؟",
+                options: [
+                    "قد تعرض الفرد لخسائر رأسمالية حين الحاجة لتحويل بعضها إلى أرصدة نقدية (سيولة)",
+                    "انعدام قيمتها الحقيقية تماماً",
+                    "عدم إمكانية تأجيرها",
+                    "تلف الأراضي العقارية"
+                ],
+                correct: 0,
+                hint: "إذا انحرجت على كاش مستعجل وتريد تبيع عقارك بسرعة، راح تضطر تبيعه بخسارة (جوة السوك).",
+                explanation: "في نهاية الفقرة الثالثة بـ (ص 9)، السلبية في الأصول الحقيقية هي أنها قد تعرض الفرد لـ (خسائر رأسمالية) حين يضطر لبيعها بسرعة لتحويل بعضها إلى أرصدة نقدية سائلة."
+            },
+            {
+                id: 53, page: 9, category: "القوة الشرائية",
+                q: "إن بيع سلعة اليوم والاحتفاظ بثمنها على شكل نقود:",
+                options: [
+                    "يضمن بقاء القوة الشرائية لهذه النقود ثابتة إلى الأبد",
+                    "لا يعني بأن القوة الشرائية لهذه النقود ستبقى ثابتة إلى الأبد",
+                    "يضاعف القوة الشرائية تلقائياً",
+                    "يمنع حدوث التضخم"
+                ],
+                correct: 1,
+                hint: "أبد ماكو ضمان للأبد! آخر سطر بصفحة 9 يكول القوة الشرائية مو شرط تبقى ثابتة للأبد.",
+                explanation: "تختم (ص 9) وظيفة مخزن القيمة بالتأكيد على أن بيع سلعة اليوم والاحتفاظ بثمنها على شكل نقود (لا يعني بأن القوة الشرائية لهذه النقود ستبقى ثابتة إلى الأبد) بسبب تقلبات الأسعار عبر الزمن."
+            },
+
+            // --- ص 10 (PDF Page 8) ---
+            {
+                id: 54, page: 10, category: "معيار للمدفوعات الآجلة",
+                q: "نتيجة لزيادة الإنتاج الجاري عن المبيعات الجارية وتزايد المخزون السلعي في المجتمعات الحديثة، برزت أهمية:",
+                options: [
+                    "العودة لنظام المقايضة",
+                    "تسويق المنتجات على أساس العقود (الآجلة) لتجنب تكديس المخزون وضمان تدفق السلع",
+                    "إتلاف المخزون الفائض",
+                    "إغلاق المصانع"
+                ],
+                correct: 1,
+                hint: "البضاعة تكدست بالمخازن، فكاموا يبيعون بعقود وبالآجل حتى يمشون السوك وما يتكدس المخزون.",
+                explanation: "في مطلع (ص 10)، أدت زيادة الإنتاج وتراكم المخزون السلعي في المجتمعات الحديثة إلى ضرورة تسويق المنتجات على أساس (العقود الآجلة) لتجنب تكديس المخزون وضمان استمرار تدفق السلع."
+            },
+            {
+                id: 55, page: 10, category: "معيار للمدفوعات الآجلة",
+                q: "التعاقد على أساس قيمة معينة يلتزم المقترض بردها في وقت لاحق مضافاً إليها الفوائد يعتمد على وظيفة النقود كـ:",
+                options: [
+                    "وسيط للمدفوعات الآجلة (معيار للمدفوعات الآجلة)",
+                    "نقود سلعية قديمة",
+                    "مقياس للقيم الحاضرة فقط دون المستقبلية",
+                    "أداة للمقايضة"
+                ],
+                correct: 0,
+                hint: "قرض يندفع بوقت لاحق وية فوائده.. يعني وسيط أو معيار للمدفوعات الآجلة!",
+                explanation: "توضح (ص 10) أن إبرام عقود الائتمان والقروض التي تُسدد في المستقبل مع فوائدها يستند إلى وظيفة النقود كـ (معيار أو وسيط للمدفوعات الآجلة)، حيث يمتد دور النقود لقياس القيم المستقبلية وليس الحاضرة فقط."
+            },
+            {
+                id: 56, page: 10, category: "معيار للمدفوعات الآجلة",
+                q: "ماذا يسبب التذبذب الشديد في قيمة النقود بالنسبة لسوق الائتمان؟",
+                options: [
+                    "ينعش سوق الائتمان ويزيد القروض",
+                    "يسبب اضطراب سوق الائتمان مما يؤثر سلباً على حجم الائتمان والنشاط الاقتصادي",
+                    "يزيد من ثقة الدائن والمدين",
+                    "لا يؤثر أبداً على العقود الآجلة"
+                ],
+                correct: 1,
+                hint: "إذا الفلوس كل يوم بسعر، سوق القروض والائتمان يتخربط ويضطرب.",
+                explanation: "وفقاً لـ (ص 10)، لكي تقوم النقود بوظيفة المدفوعات الآجلة يجب أن تحتفظ بقيمتها لفترة طويلة؛ لأن التذبذب في قيمة النقود يسبب (اضطراب سوق الائتمان) مما يؤثر سلباً على حجم الائتمان والنشاط الاقتصادي."
+            },
+            {
+                id: 57, page: 10, category: "التضخم والمدفوعات الآجلة",
+                q: "في فترات ارتفاع الأسعار (التضخم) وتدهور قيمة النقود، ماذا يحدث عند سداد القرض؟",
+                options: [
+                    "يتضرر الدائن وتتم إعادة توزيع الثروة من الدائن إلى المدين",
+                    "يستفيد الدائن وتتم إعادة توزيع الثروة من المدين إلى الدائن",
+                    "لا يتأثر أي طرف",
+                    "تزداد القيمة الحقيقية للقرض عند السداد"
+                ],
+                correct: 0,
+                hint: "بالتضخم، اللي ينطي دين (الدائن) ينضرب بوري لأن الفلوس من ترجعله تشتري غراض أقل، فتنتقل الثروة من الدائن للمدين!",
+                explanation: "في (ص 10)، خلال فترات ارتفاع الأسعار (التضخم)، يجد الدائن (المُقرض) أن قيمة السلع التي يستطيع القرض شراءها عند رده أقل مما كانت عليه وقت عقد القرض، مما ينطوي على خسارة للدائن وإعادة توزيع الثروة (من الدائن إلى المدين)."
+            },
+            {
+                id: 58, page: 10, category: "الانكماش والمدفوعات الآجلة",
+                q: "في فترات انخفاض الأسعار (الانكماش)، ماذا يحدث عند سداد القرض؟",
+                options: [
+                    "تزيد قيمة السلع التي يشتريها القرض عند رده، مما يتضمن إعادة توزيع الدخل من المدين إلى الدائن",
+                    "يستفيد المدين ويخسر الدائن",
+                    "تنخفض القوة الشرائية للقرض",
+                    "يلغى القرض قانونياً"
+                ],
+                correct: 0,
+                hint: "بالانكماش تنكلب الآية! الأسعار رخصت، فالمدين يدفع فلوس تشتري غراض أكثر من وكت العقد، فيتحول الدخل من المدين للدائن.",
+                explanation: "في نهاية (ص 10)، خلال فترات انخفاض الأسعار (الانكماش)، ترتفع القوة الشرائية للنقود، فيجد المدين (المقترض) أن المبلغ الذي يرده يشتري سلعاً أكثر مما كان يشتريه وقت العقد، مما يتضمن إعادة توزيع الدخل (من المدين إلى الدائن)."
+            }
+        ];
+
+        // Witty Iraqi Reactions for Correct & Wrong Answers
+        const FUNNY_CORRECT_REACTIONS = [
+            "عاشت ايدك يالذهب! جوابك يوزن ذهب عيار 24 💰👏",
+            "كفو والله! محافظ البنك المركزي يصفكلك هسة 🏦🔥",
+            "عمي أنت قاري الملزمة لو مؤلفها؟ عيني باردة عليك! 😎✨",
+            "بالهدف! جريشم لو عايش جان باس راسك على هالجواب 🎯👑",
+            "مضبوط 100%! فلوسك صافية وما بيها أي تضخم 💵✅",
+            "لك عيني شهل فهامة! اقتصاد العراق بأمان دام انت موجود 🚀🇮🇶"
+        ];
+
+        const FUNNY_WRONG_REACTIONS = [
+            "ها خوية وين رايح؟ جفصت بالعملة الرديئة! اقرأ الشرح جوة 😅💸",
+            "لا يمعود! لو باقي عالمقايضة وتنطي تمن أحسنلك من هالجواب 😂🐓",
+            "بوري معدل! البنك المركزي راح يحجز على أموالك.. شوف الشرح الصح 🚨😭",
+            "شبيك يمعود طفت يمك الوطنية؟ شوف ليش الجواب الصح يختلف 🔌😅",
+            "غلط خوية غلط! هاي العملة مضروبة ما تمشي بالسوك.. اقرأ التوضيح ❌📉"
+        ];
+
+        // Quiz State
+        let activeQuestions = [];
+        let currentIndex = 0;
+        let userAnswers = {}; // { questionIndex: selectedOptionIndex }
+        let instantFeedback = true;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let soundEnabled = true;
+        let currentReviewFilter = 'all';
+        let currentReviewPage = 'all';
+        let showReviewExplanations = true;
+
+        // Web Audio API Synth for subtle, zero-dependency sound effects
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playTone(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.setValueAtTime(190, now + 0.12);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                }
+            } catch (e) {
+                // Ignore audio errors if blocked by browser autoplay policy
+            }
         }
-      });
-      updateStats();
-      renderMCQs();
-    }
 
-    function resetMCQs() { 
-      userAnswers = {}; 
-      localStorage.removeItem('mcqAnswers'); // مسح التخزين
-      updateStats(); 
-      renderMCQs(); 
-    }
-
-    function renderEssays() {
-      const container = document.getElementById('essay-container');
-      const examQs = essayData.filter(e => e.cat === 'exam');
-      const lectureQs = essayData.filter(e => e.cat === 'lecture');
-
-      let html = '';
-      if (examQs.length > 0) {
-        html += `<div class="essay-category-title">📌 أسئلة الامتحانات المرفقة (ص3 - ص10)</div>`;
-        html += examQs.map(item => `
-          <div class="essay-card exam-match">
-            <div class="essay-header" onclick="this.parentElement.classList.toggle('open')">
-              <div><div class="exam-tag">${item.tag}</div><div class="essay-q-text">${item.q}</div></div>
-            </div>
-            <div class="essay-body">${item.ans}</div>
-          </div>
-        `).join('');
-      }
-      if (lectureQs.length > 0) {
-        html += `<div class="essay-category-title">📘 الأسئلة المقالية والتحليلية الشاملة (ص3 - ص19)</div>`;
-        html += lectureQs.map(item => `
-          <div class="essay-card">
-            <div class="essay-header" onclick="this.parentElement.classList.toggle('open')">
-              <div><div class="exam-tag" style="color:var(--accent-cyan); border-color:var(--accent-cyan); background:rgba(6,182,212,0.1)">${item.tag}</div><div class="essay-q-text">${item.q}</div></div>
-            </div>
-            <div class="essay-body">${item.ans}</div>
-          </div>
-        `).join('');
-      }
-      container.innerHTML = html;
-    }
-
-    window.onload = () => {
-      // استرجاع الإجابات إذا كانت محفوظة مسبقاً
-      const saved = localStorage.getItem('mcqAnswers');
-      if (saved) {
-        try {
-          userAnswers = JSON.parse(saved);
-        } catch (e) {
-          userAnswers = {};
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-emerald-400';
+                playTone('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-rose-400';
+            }
         }
-      }
-      
-      document.getElementById('total-mcq').textContent = mcqData.length;
-      updateStats();
-      renderMCQs();
-      renderEssays();
-    };
-  </script>
+
+        // Theme Switcher
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            const themes = ['dark', 'light', 'gold', 'cyber'];
+            themes.forEach(t => {
+                const btn = document.getElementById(`theme-${t}`);
+                if (t === themeName) {
+                    btn.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold transition-all bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                } else {
+                    btn.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold transition-all text-muted hover:text-current';
+                }
+            });
+            playTone('click');
+        }
+
+        // Switch between the 4 Windows smoothly
+        function switchWindow(windowId) {
+            document.querySelectorAll('.view-window').forEach(w => {
+                w.classList.remove('active');
+            });
+            document.getElementById(windowId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        // Start Quiz from Window 1
+        function startQuiz() {
+            playTone('click');
+            const doShuffleQ = document.getElementById('opt-shuffle-q').checked;
+            const doShuffleA = document.getElementById('opt-shuffle-a').checked;
+            instantFeedback = document.getElementById('opt-instant').checked;
+            const scope = document.getElementById('opt-scope').value;
+
+            // Filter by scope
+            let pool = JSON.parse(JSON.stringify(MASTER_QUESTIONS));
+            if (scope === 'p3-4') {
+                pool = pool.filter(q => q.page >= 3 && q.page <= 4);
+            } else if (scope === 'p5-7') {
+                pool = pool.filter(q => q.page >= 5 && q.page <= 7);
+            } else if (scope === 'p8-10') {
+                pool = pool.filter(q => q.page >= 8 && q.page <= 10);
+            }
+
+            if (doShuffleQ || scope === 'quick15' || scope === 'quick30') {
+                pool = shuffleArray(pool);
+            }
+
+            if (scope === 'quick15') pool = pool.slice(0, 15);
+            if (scope === 'quick30') pool = pool.slice(0, 30);
+
+            // Shuffle answer options if enabled while preserving the correct answer pointer
+            if (doShuffleA) {
+                pool.forEach(item => {
+                    const correctText = item.options[item.correct];
+                    item.options = shuffleArray(item.options);
+                    item.correct = item.options.indexOf(correctText);
+                });
+            }
+
+            activeQuestions = pool;
+            currentIndex = 0;
+            userAnswers = {};
+            secondsElapsed = 0;
+
+            // Start Timer
+            if (timerInterval) clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                updateTimerDisplay();
+            }, 1000);
+
+            buildNavStrip();
+            renderQuestion();
+            updateLiveScore();
+            switchWindow('view-quiz');
+        }
+
+        function updateTimerDisplay() {
+            const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+            document.getElementById('live-timer').textContent = `${mins}:${secs}`;
+        }
+
+        // Build horizontal mini question navigation strip
+        function buildNavStrip() {
+            const strip = document.getElementById('q-nav-strip');
+            strip.innerHTML = '';
+            activeQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `nav-pill-${idx}`;
+                btn.onclick = () => jumpToQuestion(idx);
+                btn.className = 'w-8 h-8 rounded-lg text-xs font-bold shrink-0 transition-all flex items-center justify-center theme-secondary';
+                btn.textContent = idx + 1;
+                strip.appendChild(btn);
+            });
+        }
+
+        function updateNavStrip() {
+            activeQuestions.forEach((q, idx) => {
+                const btn = document.getElementById(`nav-pill-${idx}`);
+                if (!btn) return;
+                const ans = userAnswers[idx];
+
+                let base = 'w-8 h-8 rounded-lg text-xs font-bold shrink-0 transition-all flex items-center justify-center ';
+                if (idx === currentIndex) {
+                    base += 'ring-2 ring-amber-400 scale-105 ';
+                }
+
+                if (ans === undefined) {
+                    btn.className = base + 'theme-secondary text-muted';
+                } else if (instantFeedback) {
+                    if (ans === q.correct) {
+                        btn.className = base + 'bg-emerald-500/25 text-emerald-400 border border-emerald-500/40';
+                    } else {
+                        btn.className = base + 'bg-rose-500/25 text-rose-400 border border-rose-500/40';
+                    }
+                } else {
+                    btn.className = base + 'bg-sky-500/25 text-sky-400 border border-sky-500/40';
+                }
+            });
+
+            // Auto-scroll current pill into view
+            const activePill = document.getElementById(`nav-pill-${currentIndex}`);
+            if (activePill) {
+                activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        function renderQuestion() {
+            const item = activeQuestions[currentIndex];
+            const total = activeQuestions.length;
+
+            // Update Top Badges & Page Number
+            document.getElementById('q-counter-badge').textContent = `سؤال ${currentIndex + 1} من ${total}`;
+            document.getElementById('q-page-text').textContent = `ملزمة ص ${item.page}`;
+            document.getElementById('q-inline-page').innerHTML = `<i class="fa-solid fa-bookmark"></i> ملزمة ص ${item.page}`;
+            document.getElementById('q-category-label').textContent = item.category;
+
+            // Progress Bar
+            const pct = Math.round(((currentIndex + 1) / total) * 100);
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+
+            // Question Text (with subtle inline page badge at the front)
+            document.getElementById('q-text').innerHTML = `
+                <span class="inline-block px-2 py-0.5 rounded-md text-xs font-extrabold bg-amber-500/15 text-amber-400 border border-amber-500/30 ml-1.5 align-middle">ص ${item.page}</span>
+                <span>${item.q}</span>
+            `;
+
+            // Reset Hint Box
+            document.getElementById('hint-box').classList.remove('open');
+            document.getElementById('hint-text').textContent = item.hint;
+
+            // Reset Feedback & Explanation Box
+            const fbBox = document.getElementById('feedback-box');
+            fbBox.classList.remove('open');
+
+            // Render Options
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+            const arabicLetters = ['أ', 'ب', 'ج', 'د'];
+            const existingAnswer = userAnswers[currentIndex];
+
+            item.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                let classes = 'option-item w-full text-right p-4 rounded-2xl flex items-center justify-between gap-3 font-bold text-sm sm:text-base ';
+
+                if (existingAnswer !== undefined) {
+                    if (instantFeedback) {
+                        classes += 'disabled cursor-default ';
+                        if (idx === item.correct) {
+                            classes += 'correct ';
+                        } else if (idx === existingAnswer && existingAnswer !== item.correct) {
+                            classes += 'wrong ';
+                        }
+                    } else if (idx === existingAnswer) {
+                        classes += 'selected ';
+                    }
+                }
+
+                btn.className = classes;
+                btn.onclick = () => selectOption(idx);
+
+                let statusIcon = '';
+                if (existingAnswer !== undefined && instantFeedback) {
+                    if (idx === item.correct) {
+                        statusIcon = '<i class="fa-solid fa-circle-check text-emerald-400 text-lg shrink-0"></i>';
+                    } else if (idx === existingAnswer) {
+                        statusIcon = '<i class="fa-solid fa-circle-xmark text-rose-400 text-lg shrink-0"></i>';
+                    }
+                } else if (existingAnswer === idx && !instantFeedback) {
+                    statusIcon = '<i class="fa-solid fa-circle-dot text-emerald-400 text-lg shrink-0"></i>';
+                }
+
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-xl theme-card flex items-center justify-center text-xs font-black shrink-0">${arabicLetters[idx]}</span>
+                        <span class="leading-relaxed">${optText}</span>
+                    </div>
+                    ${statusIcon}
+                `;
+
+                optContainer.appendChild(btn);
+            });
+
+            // If already answered and in instantFeedback mode, show the inline feedback & explanation card
+            if (existingAnswer !== undefined && instantFeedback) {
+                showInlineFeedback(existingAnswer === item.correct, item, false);
+            }
+
+            // Prev / Next button states
+            document.getElementById('btn-prev').disabled = (currentIndex === 0);
+            const nextLabel = document.getElementById('btn-next-label');
+            if (currentIndex === total - 1) {
+                nextLabel.textContent = 'إنهاء وعرض النتيجة';
+            } else {
+                nextLabel.textContent = 'السؤال التالي';
+            }
+
+            updateNavStrip();
+        }
+
+        function toggleHint() {
+            playTone('click');
+            const box = document.getElementById('hint-box');
+            box.classList.toggle('open');
+        }
+
+        // Allow student to reveal the answer & explanation on demand
+        function revealExplanationDirectly() {
+            playTone('click');
+            const item = activeQuestions[currentIndex];
+            const fbBox = document.getElementById('feedback-box');
+
+            if (fbBox.classList.contains('open')) {
+                fbBox.classList.remove('open');
+                return;
+            }
+
+            const existingAnswer = userAnswers[currentIndex];
+            const isCorrect = existingAnswer !== undefined ? (existingAnswer === item.correct) : null;
+            showInlineFeedback(isCorrect, item, existingAnswer === undefined);
+        }
+
+        function selectOption(optIdx) {
+            const item = activeQuestions[currentIndex];
+
+            // Prevent changing answer if instant feedback is ON and already answered
+            if (instantFeedback && userAnswers[currentIndex] !== undefined) {
+                return;
+            }
+
+            userAnswers[currentIndex] = optIdx;
+
+            if (instantFeedback) {
+                const isCorrect = (optIdx === item.correct);
+                playTone(isCorrect ? 'correct' : 'wrong');
+            } else {
+                playTone('click');
+            }
+
+            updateLiveScore();
+            renderQuestion();
+        }
+
+        function showInlineFeedback(isCorrect, item, isRevealedWithoutAnswering) {
+            const fbBox = document.getElementById('feedback-box');
+            const fbHeader = document.getElementById('feedback-header');
+            const fbIcon = document.getElementById('feedback-icon');
+            const fbText = document.getElementById('feedback-text');
+            const fbPage = document.getElementById('feedback-page-ref');
+            const fbCorrectAns = document.getElementById('feedback-correct-answer');
+            const fbExpTitle = document.getElementById('explanation-title');
+            const fbExpText = document.getElementById('feedback-explanation-text');
+
+            const arabicLetters = ['أ', 'ب', 'ج', 'د'];
+            const correctOptionFormatted = `(${arabicLetters[item.correct]}) ${item.options[item.correct]}`;
+
+            if (isRevealedWithoutAnswering) {
+                fbBox.className = 'inline-collapse open rounded-2xl overflow-hidden theme-secondary border border-amber-500/40';
+                fbHeader.className = 'px-4 py-3 flex flex-wrap items-center justify-between gap-2 bg-amber-500/15 text-amber-300 border-b border-amber-500/25';
+                fbIcon.className = 'fa-solid fa-lightbulb text-xl text-amber-400';
+                fbText.textContent = 'كشفنالك الجواب الصحيح وشرحه من الملزمة 📖👇';
+            } else if (isCorrect) {
+                fbBox.className = 'inline-collapse open rounded-2xl overflow-hidden theme-secondary border border-emerald-500/40';
+                fbHeader.className = 'px-4 py-3 flex flex-wrap items-center justify-between gap-2 bg-emerald-500/15 text-emerald-300 border-b border-emerald-500/25';
+                fbIcon.className = 'fa-solid fa-face-grin-stars text-xl text-emerald-400';
+                fbText.textContent = FUNNY_CORRECT_REACTIONS[currentIndex % FUNNY_CORRECT_REACTIONS.length];
+            } else {
+                fbBox.className = 'inline-collapse open rounded-2xl overflow-hidden theme-secondary border border-rose-500/40';
+                fbHeader.className = 'px-4 py-3 flex flex-wrap items-center justify-between gap-2 bg-rose-500/15 text-rose-300 border-b border-rose-500/25';
+                fbIcon.className = 'fa-solid fa-face-dizzy text-xl text-rose-400';
+                fbText.textContent = FUNNY_WRONG_REACTIONS[currentIndex % FUNNY_WRONG_REACTIONS.length];
+            }
+
+            fbPage.innerHTML = `<i class="fa-solid fa-file-lines"></i> ملزمة ص ${item.page}`;
+            fbCorrectAns.textContent = correctOptionFormatted;
+            fbExpTitle.textContent = `💡 ليش هذا الجواب هو الصح؟ (شرح الملزمة - ص ${item.page}):`;
+            fbExpText.textContent = item.explanation;
+        }
+
+        function updateLiveScore() {
+            let correctCount = 0;
+            let wrongCount = 0;
+            Object.keys(userAnswers).forEach(qIdx => {
+                const ans = userAnswers[qIdx];
+                const q = activeQuestions[qIdx];
+                if (ans === q.correct) correctCount++;
+                else wrongCount++;
+            });
+            document.getElementById('live-correct').textContent = correctCount;
+            document.getElementById('live-wrong').textContent = instantFeedback ? wrongCount : Object.keys(userAnswers).length;
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                playTone('click');
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            playTone('click');
+            if (currentIndex < activeQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            playTone('click');
+            currentIndex = idx;
+            renderQuestion();
+        }
+
+        // Finish Quiz & Calculate Results for Window 3
+        function finishQuiz() {
+            if (timerInterval) clearInterval(timerInterval);
+            playTone('correct');
+
+            const total = activeQuestions.length;
+            let correct = 0;
+            const pageStats = {}; // { pageNum: { total: 0, correct: 0 } }
+
+            activeQuestions.forEach((q, idx) => {
+                if (!pageStats[q.page]) pageStats[q.page] = { total: 0, correct: 0 };
+                pageStats[q.page].total++;
+
+                if (userAnswers[idx] === q.correct) {
+                    correct++;
+                    pageStats[q.page].correct++;
+                }
+            });
+
+            const wrongOrSkipped = total - correct;
+            const percent = Math.round((correct / total) * 100);
+
+            // Populate Results Numbers
+            document.getElementById('res-percent').textContent = `${percent}%`;
+            document.getElementById('res-correct').textContent = `${correct} / ${total}`;
+            document.getElementById('res-wrong').textContent = wrongOrSkipped;
+            document.getElementById('res-time').textContent = document.getElementById('live-timer').textContent;
+
+            // Determine Funny Iraqi Rank/Title
+            const emojiEl = document.getElementById('rank-emoji');
+            const titleEl = document.getElementById('rank-title');
+            const descEl = document.getElementById('rank-desc');
+
+            if (percent >= 90) {
+                emojiEl.textContent = '🏦👑';
+                titleEl.textContent = 'محافظ البنك المركزي العراقي';
+                descEl.textContent = 'ختمت علم النقود من ص 3 لحد ص 10! جريشم بنفسه يفرشلك ورد بالشورجة ويخليك توقع عالعملة الجديدة!';
+            } else if (percent >= 75) {
+                emojiEl.textContent = '💰🔥';
+                titleEl.textContent = 'حوت الشورجة وتاجر ذهب مرخص';
+                descEl.textContent = 'وضعك بالسليم ومسيطر عالسوك! بس رادلك نظرة خفيفة عالأخطاء وشرحها حتى تصير محافظ رسمي.';
+            } else if (percent >= 50) {
+                emojiEl.textContent = '🧾😅';
+                titleEl.textContent = 'موظف مصرف طافية يمه الكهرباء';
+                descEl.textContent = 'عبرت عالحافة بوظيفة المدفوعات الآجلة! ناجح بس يرادلك تراجع شرح الإجابات الصحيحة للصفحات اللي خربطت بيها.';
+            } else if (percent >= 25) {
+                emojiEl.textContent = '🐓🌾';
+                titleEl.textContent = 'عايش بعصر المقايضة (ينطي دجاجة وياخذ تمن)';
+                descEl.textContent = 'خوية بعدك بصفحة 3 مال المقايضة! الحك على روحك وافتح مراجعة الأجوبة والشرح جوة قبل الامتحان.';
+            } else {
+                emojiEl.textContent = '💸😭';
+                titleEl.textContent = 'عملة رديئة طردها قانون جريشم خارج التداول';
+                descEl.textContent = 'كلشي ما قاري يمعود! حتى الصاغة ما يقبلون ودائعك.. فوت على مراجعة الإجابات واقرأ الشرح المفصل من ص 3 لحد ص 10!';
+            }
+
+            // Populate Page-by-Page Breakdown
+            const grid = document.getElementById('page-breakdown-grid');
+            grid.innerHTML = '';
+            Object.keys(pageStats).sort((a, b) => Number(a) - Number(b)).forEach(p => {
+                const st = pageStats[p];
+                const pPct = Math.round((st.correct / st.total) * 100);
+                const badgeColor = pPct >= 75 ? 'text-emerald-400' : (pPct >= 50 ? 'text-amber-400' : 'text-rose-400');
+                const card = document.createElement('div');
+                card.className = 'theme-card rounded-xl p-2.5 flex items-center justify-between';
+                card.innerHTML = `
+                    <span class="font-bold">ملزمة ص ${p}</span>
+                    <span class="font-black ${badgeColor}">${st.correct}/${st.total} (${pPct}%)</span>
+                `;
+                grid.appendChild(card);
+            });
+
+            switchWindow('view-results');
+        }
+
+        // Open Window 4: Detailed Review
+        function openReviewWindow(filterType) {
+            playTone('click');
+            currentReviewFilter = filterType || 'all';
+            currentReviewPage = 'all';
+            document.getElementById('rev-page-select').value = 'all';
+            renderReviewList();
+            switchWindow('view-review');
+        }
+
+        function toggleAllReviewExplanations() {
+            playTone('click');
+            showReviewExplanations = !showReviewExplanations;
+            document.getElementById('toggle-rev-exp-text').textContent = showReviewExplanations ? 'إخفاء الشرح' : 'إظهار الشرح';
+            renderReviewList();
+        }
+
+        function filterReview(type) {
+            playTone('click');
+            currentReviewFilter = type;
+            renderReviewList();
+        }
+
+        function filterReviewByPage(pageVal) {
+            playTone('click');
+            currentReviewPage = pageVal;
+            renderReviewList();
+        }
+
+        function renderReviewList() {
+            const container = document.getElementById('review-list-container');
+            container.innerHTML = '';
+
+            let totalCount = activeQuestions.length;
+            let correctCount = 0;
+            let wrongCount = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) correctCount++;
+                else wrongCount++;
+            });
+
+            document.getElementById('count-all').textContent = totalCount;
+            document.getElementById('count-correct').textContent = correctCount;
+            document.getElementById('count-wrong').textContent = wrongCount;
+
+            // Update filter button styles
+            ['all', 'correct', 'wrong'].forEach(t => {
+                const btn = document.getElementById(`rev-filter-${t}`);
+                if (t === currentReviewFilter) {
+                    btn.className = 'px-2 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0';
+                } else {
+                    btn.className = 'px-2 py-1 rounded-lg text-[10px] font-bold theme-secondary text-muted shrink-0';
+                }
+            });
+
+            const arabicLetters = ['أ', 'ب', 'ج', 'د'];
+            let shownCount = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                const uAns = userAnswers[idx];
+                const isCorrect = (uAns === q.correct);
+
+                // Filter by status
+                if (currentReviewFilter === 'correct' && !isCorrect) return;
+                if (currentReviewFilter === 'wrong' && isCorrect) return;
+
+                // Filter by page
+                if (currentReviewPage !== 'all' && String(q.page) !== String(currentReviewPage)) return;
+
+                shownCount++;
+                const card = document.createElement('div');
+                card.className = 'theme-card rounded-2xl p-5 border-r-4 ' + (isCorrect ? 'border-r-emerald-500' : 'border-r-rose-500');
+
+                const statusBadge = isCorrect
+                    ? '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-400"><i class="fa-solid fa-check ml-1"></i>إجابتك صحيحة</span>'
+                    : (uAns === undefined
+                        ? '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400"><i class="fa-solid fa-minus ml-1"></i>متروك بدون حل</span>'
+                        : '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-400"><i class="fa-solid fa-xmark ml-1"></i>إجابتك خاطئة</span>');
+
+                let optionsHtml = '';
+                q.options.forEach((opt, oIdx) => {
+                    let optStyle = 'theme-secondary text-muted opacity-80';
+                    let badge = '';
+
+                    if (oIdx === q.correct) {
+                        optStyle = 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-bold';
+                        badge = '<span class="text-xs font-extrabold text-emerald-400 shrink-0"><i class="fa-solid fa-circle-check ml-1"></i>الجواب الصحيح</span>';
+                    } else if (oIdx === uAns && !isCorrect) {
+                        optStyle = 'bg-rose-500/15 border border-rose-500/40 text-rose-300 font-bold';
+                        badge = '<span class="text-xs font-extrabold text-rose-400 shrink-0"><i class="fa-solid fa-circle-xmark ml-1"></i>اختيارك</span>';
+                    }
+
+                    optionsHtml += `
+                        <div class="p-3 rounded-xl flex items-center justify-between gap-2 text-xs sm:text-sm ${optStyle}">
+                            <div class="flex items-center gap-2">
+                                <span class="font-black">${arabicLetters[oIdx]})</span>
+                                <span>${opt}</span>
+                            </div>
+                            ${badge}
+                        </div>
+                    `;
+                });
+
+                const explanationBlockHtml = showReviewExplanations ? `
+                    <div class="mt-3 space-y-2">
+                        <!-- Detailed Academic Explanation -->
+                        <div class="rounded-xl explanation-card px-4 py-3 text-xs sm:text-sm flex items-start gap-2.5">
+                            <i class="fa-solid fa-book-open-reader text-emerald-400 mt-1 text-base shrink-0"></i>
+                            <div>
+                                <span class="font-black text-emerald-400 block mb-1">📖 شرح الإجابة الصحيحة (ملزمة ص ${q.page}):</span>
+                                <p class="leading-relaxed">${q.explanation}</p>
+                            </div>
+                        </div>
+                        <!-- Quick Iraqi Memory Hint -->
+                        <div class="rounded-xl bg-amber-500/10 border border-amber-500/25 px-3.5 py-2 text-xs text-amber-300 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-amber-400 shrink-0"></i>
+                            <div>
+                                <span class="font-bold">تغشيشة سريعة للحفظ: </span>
+                                <span>${q.hint}</span>
+                            </div>
+                        </div>
+                    </div>
+                ` : '';
+
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-lg theme-secondary text-xs font-black">سؤال #${idx + 1}</span>
+                            <span class="page-badge"><i class="fa-solid fa-file-lines"></i> ملزمة ص ${q.page}</span>
+                            <span class="text-xs text-muted font-bold">${q.category}</span>
+                        </div>
+                        ${statusBadge}
+                    </div>
+
+                    <h3 class="font-extrabold text-base sm:text-lg mb-3 leading-relaxed">
+                        <span class="text-amber-400 text-xs font-black ml-1">[ص ${q.page}]</span>
+                        ${q.q}
+                    </h3>
+
+                    <div class="space-y-2">
+                        ${optionsHtml}
+                    </div>
+
+                    ${explanationBlockHtml}
+                `;
+
+                container.appendChild(card);
+            });
+
+            if (shownCount === 0) {
+                container.innerHTML = `
+                    <div class="theme-card rounded-2xl p-8 text-center text-muted">
+                        <i class="fa-solid fa-box-open text-3xl mb-2 text-amber-400"></i>
+                        <p class="font-bold">ماكو أسئلة تطابق هذا الفلتر حالياً! جرب تختار "الكل".</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
